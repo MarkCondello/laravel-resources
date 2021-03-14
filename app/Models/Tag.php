@@ -9,6 +9,21 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description'];
+
+    public static function columns()
+    {
+        $columns = [
+            (object)[
+                'name' => 'name',
+                'label' => 'Name',
+                // 'sortable' => true,
+            ],
+        ];
+        return $columns;
+    }
+
+
     public function posts(){
         return $this->belongsToMany(Post::class)->withTimestamps();
     }

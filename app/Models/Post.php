@@ -11,7 +11,30 @@ class Post extends Model
     use HasFactory;
     use Likables;
 
-    protected $fillable = ['user_id', 'title', 'body'];
+    protected $fillable = ['user_id', 'title', 'slug', 'body'];
+
+    public static function columns()
+    {
+        // ToDo: Add sortable options in a service
+        return [
+            (object)[
+                'name' => 'title',
+                'label' => 'Title',
+                // 'sortable' => true,
+            ],
+            (object)[
+                'name' => 'author',
+                'label' => 'Author',
+                // 'sortable' => true,
+            ],
+            (object)[
+                'name' => 'created',
+                'label' => 'Written on',
+                // 'sortable' => true,
+            ],
+        ];
+    }
+
 
     public function user(){
         //$this->hasOne($related, $fk, $localKey);

@@ -64,7 +64,14 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## Laravel Sail setup
 
 In order to connect to the db in the container make sure the port 3306 is available from the host machine
-``` sudo pkill mysql```
+``````
+
+Check other applications running on port 3306
+```lsof -i tcp:3000 ```
+
+
+Next we can run the sail command to start up the environment:
+```./vendor/bin/sail up -d```
 
 ## Eloquent/Tinker details
 
@@ -97,11 +104,10 @@ Generating the Belongs To, Has Many Through data
 We can run the Posts seeder which will create a user for each post. Users in turn will create their own Affiliation.
 App\Models\Post::factory()->count(22)->create(['user_id' => 1]);
 
-
 Generating the polymorphic data 
 We can create data for the Videos morphTo entity to connect to:
 App\Models\Series::factory()->count(4)->create();
 App\Models\Collection::factory()->count(4)->create();
 
-Once these above seeds have been added, include a few rows in the Videos table paying attention to the watchable_type as this need to be the same as the model that it is referencing eg:
+Once these above seeds have been added, include a few rows in the Videos table paying attention to the watchable_type as this needs to be the same as the model that it is referencing eg:
  1,App\Models\Series,1,Parkour madness,Dazzling stunts in European cities.,youtube.com,2021-02-18 10:09:21,NULL

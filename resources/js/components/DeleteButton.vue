@@ -1,0 +1,51 @@
+<template>
+    <div class="delete-button">
+        <form :action="action"
+              method="post"
+              ref="deleteForm"
+              >
+            <input type="hidden" name="_token" :value="this.$root._data.csrf">
+            <input type="hidden" name="_method" value="delete">
+        </form>
+        <button type="button" @click="click">
+            <i :class="icon"></i>
+            <span>Delete</span>
+        </button>
+    </div>
+</template>
+
+<script>
+    import Modal from './Modal';
+
+    export default {
+        name: "DeleteButton",
+        components: {
+            'modal': Modal,
+        },
+        props: {
+            action: {
+                type: String,
+                required: true,
+            },
+            icon: String,
+        },
+        
+        methods: {
+            click() {
+                console.log("reached click")
+                this.eventBus.$emit('modalOpen', {
+                    title: null,
+                    message: 'Are you sure you want to delete this item?',
+                    actionText: 'Yes, delete',
+                    actionClass: 'danger',
+                    actionCallback: this.doDelete,
+                });
+            },
+            doDelete() {
+                // ref would be better than jQuery
+                console.log(this.$refs)
+                this.$refs.deleteForm.submit();
+            },
+        },
+    }
+</script>

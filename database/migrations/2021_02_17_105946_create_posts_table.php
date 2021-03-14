@@ -20,7 +20,6 @@ class CreatePostsTable extends Migration
             $table->text('body');
             $table->timestamps();
 
-            //$table->foreign('user_id')->references('id')->on('users');
         });
     }
 

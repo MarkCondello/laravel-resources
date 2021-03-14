@@ -22,16 +22,16 @@ class PostFactory extends Factory
      */
     public function definition()
     {
-        //$user = User::factory()->create();
-
+        $title = $this->faker->sentence(1);
+        $raw = [' ', '.'];
+        $formatted = ['-', ''];
         return [
-            //'user_id' => $user->id,
             'user_id' => function(){
                 return User::factory()->create()->id;
             },
-            'title' => $this->faker->sentence(1),
+            'title' => $title,
             'body' => $this->faker->paragraph(1),
-
+            'slug' => str_replace($raw , $formatted, strtolower($title)),
         ];
     }
 }

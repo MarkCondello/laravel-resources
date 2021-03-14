@@ -23,7 +23,7 @@ class WelcomeController extends Controller
         $post->tags()->attach(1);
 
         $posts = Post::all();
-        return view('welcome')->with(compact('posts'));
+        return view('site.welcome')->with(compact('posts'));
 
     }
 }
