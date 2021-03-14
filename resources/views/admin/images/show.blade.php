@@ -5,7 +5,7 @@
         <h1 class="title">{{ __('Image ' ) . $image->original_name }}</h1>
         <hr>
 
-        <!-- @dump($image) -->
+         @php $postFiles = App\Models\Post::find(67)->files; @endphp
 
         <img src="{{ asset('images/' . $image->original_name) }}" alt="{{$image->original_name}}"/>
     </section>

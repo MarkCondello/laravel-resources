@@ -12,8 +12,8 @@ class File extends Model
     
     protected $guarded = ['id'];
     
-    public function post()
+    public function uploadable()
     {
-        return $this->belongsTo(Post::class);
+        return $this->morphTo();
     }
 }

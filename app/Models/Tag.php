@@ -27,6 +27,11 @@ class Tag extends Model
     public function posts(){
         return $this->belongsToMany(Post::class)->withTimestamps();
     }
+
+    public function image()
+    {
+        return $this->morphMany(File::class, 'uploadable');
+    }
     // Note: We can use the attach() method to add Posts to a tag through the pivot table post_tag like so
     // Tag->posts()->attach(4); 
 

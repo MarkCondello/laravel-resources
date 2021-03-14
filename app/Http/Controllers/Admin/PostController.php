@@ -88,7 +88,7 @@ class PostController extends Controller
 
     public function saveBlockImg(Request $request)
     {
-        $file= FileService::save($request); 
+        $file = FileService::save($request, null, "App\Models\Post", $request->get('post_id')); 
 
         return response()->json([
             'success' => 1,

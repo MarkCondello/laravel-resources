@@ -35,7 +35,6 @@ class Post extends Model
         ];
     }
 
-
     public function user(){
         //$this->hasOne($related, $fk, $localKey);
         return $this->hasOne(User::class, 'id', 'user_id');
@@ -62,6 +61,9 @@ class Post extends Model
         return $this->morphMany(Video::class, 'watchable');
     }
 
+    public function files(){
+        return $this->morphMany(File::class, 'uploadable');
+    }
 
 
 

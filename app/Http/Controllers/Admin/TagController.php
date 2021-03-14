@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\Tag\TagRequest;
 use App\Models\Tag;
+use App\Models\File;
   
 use App\Services\File\FileService; //ToDo: Add option to save an icon to a Tag
 
@@ -35,8 +36,15 @@ class TagController extends Controller
 
     public function edit(TagRequest $request, Tag $tag)
     {
-         $tag->update($request->input() );
- 
+        $tag->update( $request->except('uploadFile') );
+  
+        if($request->file('uploadFile')){
+            // Delete the previous image if it exists
+            $storedFile = $tag->image->first()->delete();
+
+            FileService::save($request, null, "App\Models\Tag", $tag->id);
+        }
+
         return redirect(route('admin.tag.index'))
             ->with('FlashMessage', "Tag {$tag->name} was succesfully updated.");
     }
@@ -50,7 +58,11 @@ class TagController extends Controller
     
     public function store(TagRequest $request)
     {
-        $tag = Tag::create($request->input());
+        $tag = Tag::create($request->except('uploadFile'));
+
+        if($request->file('uploadFile')){
+            FileService::save($request, null, "App\Models\Tag", $tag->id);
+        }
    
         return redirect(route('admin.tag.index'))
         ->with('FlashMessage', "Tag {$tag->name} was succesfully created.");

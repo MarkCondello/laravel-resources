@@ -10,7 +10,7 @@
         <div class="field">
             <label class="label">Upload Image</label>
             <div class="control">
-                <input class="input" name="imageUpload" type="file" value="{{ old('image') ?? null}}">
+                <input class="input" name="uploadFile" type="file" value="{{ old('image') ?? null}}">
             </div>
             @error('image')<p class="help is-danger">{{ $message }}</p>@enderror
         </div>

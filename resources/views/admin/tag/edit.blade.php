@@ -4,12 +4,12 @@
     @if(isset($tag))
     <h1 class="title">Edit {{ $tag->name }}</h1>
     <hr>
-    <form action="{{ route('admin.tag.edit', $tag) }}" method="post">
+    <form action="{{ route('admin.tag.edit', $tag) }}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="{{$tag->id}}"/>
     @else 
     <h1 class="title">Create Tag</h1>
     <hr>
-    <form action="{{ route('admin.tag.save') }}" method="post">
+    <form action="{{ route('admin.tag.save') }}" method="post" enctype="multipart/form-data">
     @endif
         @csrf 
         <div class="field">
@@ -18,6 +18,16 @@
                 <input class="input" name="name" type="text" value="{{ old('name') ?? $tag->name ?? null }}">
             </div>
             @error('title')<p class="help is-danger">{{ $message }}</p>@enderror
+        </div>
+        <div class="field">
+            <label class="label">Upload Image</label>
+            @if($tag)
+            <img width="200" src="{{ asset('images/' . $tag->image->first()->original_name) }}" alt="{{ $tag->image->first()->original_name }}"/>
+            @endif
+            <div class="control">
+                <input class="input" name="uploadFile" type="file" value="{{ old('image') ?? null }}">
+            </div>
+            @error('image')<p class="help is-danger">{{ $message }}</p>@enderror
         </div>
 
         <div class="field">

@@ -14,8 +14,7 @@ class FileService
     protected static $postAttachedFilesLink    = 'post-attached-files/';
     // protected static $avatarFilesLink       = 'avatars/';
     // protected static $logoFilesLink         = 'logos/';
-    // protected static $tinyFilesLink         = 'wiki-images/';
-
+ 
     // public static function getBaseURL()
     // {
     //     return 'http://d2p4on5yypr7sm.cloudfront.net/';
@@ -61,11 +60,13 @@ class FileService
     //     $file->delete();
     // }
 
-    public static function save($request, File $file = null)
+    public static function save($request, File $file = null, $uploadable_type, $uploadable_id)
     {
-        if ($file == null) {
+        if ($file === null) {
             $file = new File();
         }
+        // dd("service". $request);
+
         $fileUpload = $request->file('uploadFile');
 
         $file->original_name = $fileUpload->getClientOriginalName();
@@ -73,14 +74,16 @@ class FileService
         $file->size          = $fileUpload->getSize();
         $file->file_type     = $fileUpload->guessClientExtension();
         $file->user_id       = auth()->id();
-        $file->post_id      = $request->get('post_id');
+
+        $file->uploadable_type  = $uploadable_type;
+        $file->uploadable_id    = $uploadable_id;
 
         //Store image in database
         $file->save();
+        //dd("service". $file);
 
         //Store image locally 
         $fileUpload->storeAs('', $fileUpload->getClientOriginalName());
-        //$filePath = $fileUpload->store('post-attached-files');
         return $file;
     }
 
@@ -113,24 +116,5 @@ class FileService
     //     return $project;
     // }
 
-    // public static function uploadTinyImage()
-    // {
-    //     if (Request::hasFile('image')) {
-    //         $file = Request::file('image');
-
-    //         $image = new File();
-
-    //         $image->original_name = $file->getClientOriginalName();
-    //         $image->hash_name     = $file->hashName();
-    //         $image->size          = $file->getClientSize();
-    //         $image->file_type     = $file->guessClientExtension();
-    //         $image->user_id       = auth()->id();
-    //         $image->save();
-
-    //         //Store image into cloud
-    //         $file->storeAs('wiki-images/' . $image->hash_name, $file->getClientOriginalName(), 's3');
-
-    //         return $image;
-    //     }
-    // }
+ 
 }
