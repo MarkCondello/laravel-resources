@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WelcomeController;
+// ToDo: Add the COntrollers paths here
+use App\Http\Controllers\Site\HomeController;
+use App\Http\Controllers\Site\TagController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +16,13 @@ use App\Http\Controllers\WelcomeController;
 |
 */
 
- Route::get('/', [WelcomeController::class, 'home'])->name('home');
+// SHould have a site group
+Route::get('/', [HomeController::class, 'home'])->name('home');
+
+Route::get('tag/{tagName}', [TagController::class, 'tagsPostList'])->name('tag.post.list');
+Route::get('tag/{tagName}/{postSlug}', [TagController::class, 'tagsPostShow'])->name('tag.post.show');
+
+
 
 //ToDo: Replace all this with a dynamically created links from post categories and their posts instead
 Route::group([
@@ -49,10 +58,7 @@ Route::group([
         return view('site.posts.eloquent.morph-many-to-many');
     })->name('morph-many-to-many');
 });
-//  Route::get('/eloquent', function(){
-//     return view('site.posts.list');
-//  })->name('eloquent');
-
+ 
 Auth::routes();
 
 Route::group([
@@ -90,7 +96,6 @@ Route::group([
             Route::post('/{tag}/edit', [App\Http\Controllers\Admin\TagController::class, 'edit'])->name('edit');
             Route::delete('/{tag}/delete', [App\Http\Controllers\Admin\TagController::class, 'destroy'])->name('destroy');
         });
-
 
         Route::group([
             'prefix' => '/images',

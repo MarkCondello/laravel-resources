@@ -10,9 +10,26 @@
         <div class="field">
             <label class="label">Upload Image</label>
             <div class="control">
-                <input class="input" name="uploadFile" type="file" value="{{ old('image') ?? null}}">
+                <input class="input" name="uploadFile" type="file">
             </div>
-            @error('image')<p class="help is-danger">{{ $message }}</p>@enderror
+            @error('uploadFile')<p class="help is-danger">{{ $message }}</p>@enderror
+        </div>
+
+        <div class="field">
+            <label class="label">Save A Custom File Name</label>
+            <div class="control">
+            <!--   -->
+                <input name="file_name_option" type="checkbox" value="1" {{ old('file_name_option') ? 'checked' : null }}>
+            </div>
+            @error('file_name_option')<p class="help is-danger">{{ $message }}</p>@enderror
+        </div>
+
+        <div class="field">
+            <label class="label">File Name</label>
+            <div class="control">
+                <input class="input" name="file_name" type="text" value="{{ old('file_name') ?? null }}">
+            </div>
+            @error('file_name')<p class="help is-danger">{{ $message }}</p>@enderror
         </div>
 
         <div class="field is-grouped">
