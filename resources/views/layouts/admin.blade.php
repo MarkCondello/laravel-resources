@@ -108,7 +108,7 @@
                 </div>
             </div>
         </nav>
-
+        @include('partials.flash-messages')
         <main class="container">
             @yield('content')
         </main>

@@ -1,5 +1,6 @@
 import './includes/Editor';
 
+import FlashMessage from './components/FlashMessage.js';
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -7,6 +8,16 @@ import './includes/Editor';
  */
 
 require('./bootstrap');
+
+window.addEventListener('load', ()=>{
+   let flashMessages = Array.from(document.querySelectorAll(".flash-message"));
+
+  flashMessages.forEach(el=>{
+    new FlashMessage(el);
+  });
+ 
+});
+
 
 window.Vue = require('vue').default;
 

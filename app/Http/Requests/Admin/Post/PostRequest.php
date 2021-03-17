@@ -24,12 +24,13 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-
+        //dd(request()->input('tags'));
         return [
             'title' => 'bail|required|min:4|max:80|string',
             // needs to not check uniqueness for its own model
             'slug' => 'required|string|min:4|max:80|unique:posts,slug,' . request()->input('id'),
             'body' => 'nullable|min:4|string',
+            'tags' => 'required',
         ];
     }
 }

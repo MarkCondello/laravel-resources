@@ -1,0 +1,13 @@
+.flash-message {
+    border-radius: 0;
+    opacity: 1;
+    transition: opacity 1s;
+
+    .message-header {
+        border-radius: 0;
+    }
+
+    &.fade {
+        opacity: 0;
+    }
+}

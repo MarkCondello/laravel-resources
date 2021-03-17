@@ -12876,4 +12876,18 @@ a.has-text-danger-dark:focus {
   padding: 3rem 1.5rem 6rem;
 }
 
+.flash-message {
+  border-radius: 0;
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+.flash-message .message-header {
+  border-radius: 0;
+}
+
+.flash-message.fade {
+  opacity: 0;
+}
+
 

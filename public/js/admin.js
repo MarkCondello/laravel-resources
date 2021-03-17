@@ -2729,6 +2729,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _includes_Editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./includes/Editor */ "./resources/js/includes/Editor.js");
+/* harmony import */ var _components_FlashMessage_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/FlashMessage.js */ "./resources/js/components/FlashMessage.js");
+
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -2738,6 +2740,12 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+window.addEventListener('load', function () {
+  var flashMessages = Array.from(document.querySelectorAll(".flash-message"));
+  flashMessages.forEach(function (el) {
+    new _components_FlashMessage_js__WEBPACK_IMPORTED_MODULE_1__.default(el);
+  });
+});
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
 Vue.prototype.eventBus = new Vue();
 /**
@@ -2812,6 +2820,58 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/FlashMessage.js":
+/*!*************************************************!*\
+  !*** ./resources/js/components/FlashMessage.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _default)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var _default = /*#__PURE__*/function () {
+  function _default(el) {
+    var _this = this;
+
+    _classCallCheck(this, _default);
+
+    this.flashMessage = el;
+    this.closeButton = this.flashMessage.querySelector('button.delete');
+    this.closeButton.addEventListener('click', function (event) {
+      _this.fadeFlashMessage();
+    });
+    setTimeout(function () {
+      _this.fadeFlashMessage();
+    }, 3000);
+  }
+
+  _createClass(_default, [{
+    key: "fadeFlashMessage",
+    value: function fadeFlashMessage() {
+      var _this2 = this;
+
+      this.flashMessage.classList.add("fade");
+      setTimeout(function () {
+        _this2.flashMessage.style.display = "none";
+      }, 1000);
+    }
+  }]);
+
+  return _default;
+}();
+
+
 
 /***/ }),
 

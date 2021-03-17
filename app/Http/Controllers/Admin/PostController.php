@@ -63,15 +63,16 @@ class PostController extends Controller
         $post->update($request->except('tags', 'link_name', 'link_url'));
 
         $post->tags()->sync( request()->input('tags') );
-        return redirect(route('admin.post.index'))
-            ->with('FlashMessage', "Post {$post->name} was succesfully updated.");
+
+         return redirect(route('admin.post.index'))
+            ->with('FlashMessage', "Post  $post->title was succesfully updated.");
     }
 
     public function destroy(Post $post)
     {        
-        $post->delete();
+         $post->delete();
         return redirect(route('admin.post.index'))
-            ->with('FlashMessage', "Post {$post->name} was succesfully deleted.");
+            ->with('FlashNotice', "Post $post->title was succesfully deleted.");
     }
     
     public function store(PostRequest $request)
@@ -83,7 +84,7 @@ class PostController extends Controller
         $post->tags()->sync( request()->input('tags') );
 
         return redirect(route('admin.post.index'))
-        ->with('FlashMessage', "Post {$post->name} was succesfully created.");
+        ->with('FlashMessage', "Post $post->title was succesfully created.");
     }
 
     public function saveBlockImg(Request $request)

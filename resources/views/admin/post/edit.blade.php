@@ -52,20 +52,22 @@
                 <div class="select">
                 <!--ToDo: Make this multiple and a Vue Component -->
                     <select name="tags">
-                        <option>Select a tag</option>
+                        <option value="" selected>Select a tag</option>
                         @foreach($tags as $key=>$tag)
                         <option value="{{$key}}" 
-                        @if(isset($post))
-                            @forelse($post->tags as $postTag)
-                            {{ ($postTag->id) === $key ? 'selected' : null }}
-                            @empty
-                                null
-                            @endforelse
-                        @endif
-                            >{{$tag}}</option>
-                    @endforeach
+                            @if(isset($post))
+                                @forelse($post->tags as $postTag)
+                                {{ ($postTag->id) === $key ? 'selected' : null }}
+                                @empty
+                                    null
+                                @endforelse
+                            @endif
+                                >{{$tag}}</option>
+                        @endforeach
                     </select>
                 </div>
+                @error('tags')<p class="help is-danger">{{ $message }}</p>@enderror
+
             </div>
         </div>
         @endif
