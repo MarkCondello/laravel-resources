@@ -6,32 +6,14 @@
 <!-- Run a loop of the tags with posts here -->
     <!-- 0 % 4 = 0; 4%4=0 ; 1%4 = 1; 5%4= 1; 2%4=2; 6%4=2;10%4=2; 3%4=3=3; 7%4=3; -->
 @foreach($tags as $key=>$tag)
-    @if(count($tag->posts))
-        @switch($key % 4)
-            @case( 0)
-            <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t md:border-l">
-            @break
-
-            @case(  1  )
-            <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
-            @break
-
-            @case(2)
-            <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-            @break
-
-            @case(  3)
-            <div class="p-6 border-t border-gray-200 dark:border-gray-700  ">
-            @break
-        @endswitch
+    @if(count($tag->posts)  )
+   
+        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
 
             <div class="flex items-center">
-                    @if($tag->image)
-                    <img src="{{ asset('images/' . $tag->image->first()->original_name) }}" width="30" alt="{{$tag->name}} image."/>
-                    @endif
-                 <div class="ml-4 text-lg leading-7 font-semibold">
-                <!-- ToDo: Set up dynamic route for each tag -->
-                    <a href="{{ route('tag.post.list', $tag->name) }}"
+                <img src="{{ asset( isset($tag->image) && isset($tag->image->first()->original_name) ? 'images/' . $tag->image->first()->original_name : 'images/logos/laravel.png' )   }}" width="30" alt="{{$tag->name}} image."/>
+                <div class="ml-4 text-lg leading-7 font-semibold">
+                     <a href="{{ route('tag.post.list', $tag->name) }}"
                         class="underline text-gray-900 dark:text-white">{{$tag->name}}</a>
                 </div>
             </div>
@@ -46,8 +28,7 @@
 @endforeach
 
 
-
-    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
+    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
         <div class="flex items-center">
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
@@ -67,7 +48,7 @@
         </div>
     </div>
 
-    <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
         <div class="flex items-center">
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
@@ -98,7 +79,6 @@
             <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel-news.com/"
                     class="underline text-gray-900 dark:text-white">Laravel News</a></div>
         </div>
-
         <div class="ml-12">
             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                 Laravel News is a community driven portal and newsletter aggregating all of the latest and most
@@ -107,7 +87,7 @@
         </div>
     </div>
 
-    <div class="p-6 border-t border-gray-200 dark:border-gray-700  ">
+    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l ">
         <div class="flex items-center">
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
@@ -117,7 +97,6 @@
             </svg>
             <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</div>
         </div>
-
         <div class="ml-12">
             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                 Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com"
@@ -133,8 +112,6 @@
             </div>
         </div>
     </div>
-
-     
 </div>
  
 @endsection

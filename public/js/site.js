@@ -2089,15 +2089,16 @@ if (editorJs) {
       postId = editorJs.dataset.postId,
       csrfMeta = document.querySelector("meta[name='csrf-token']").getAttribute("content"),
       ticketContent = "";
+  console.dir(postBodyTextArea);
 
   try {
-    ticketContent = JSON.parse(postBodyTextArea.innerHTML);
+    ticketContent = JSON.parse(postBodyTextArea.innerText);
   } catch (e) {
     ticketContent = {
       blocks: [{
         type: "paragraph",
         data: {
-          text: postBodyTextArea.innerHTML
+          text: postBodyTextArea.innerText
         }
       }]
     };

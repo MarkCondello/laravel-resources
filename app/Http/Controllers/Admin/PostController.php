@@ -60,12 +60,30 @@ class PostController extends Controller
             $post->save();
         }
 
-        $post->update($request->except('tags', 'link_name', 'link_url'));
+        $post->update($request->except('tags', 'link_name', 'link_url' ));
+
+        // $decodedBody = json_decode($request->input('body'));
+        // $decodedBodyBlocks = $decodedBody->blocks;
+        // $decodedBodyBlocksEncoded = [];
+
+        // foreach($decodedBodyBlocks as $block){
+        //     if($block->type === "paragraph"){
+        //          $block->data->text = htmlspecialchars_decode($block->data->text, ENT_QUOTES);
+        //     }  
+        //     $decodedBodyBlocksEncoded[] = $block;
+        // }
+        // // $decodedBodyBlocksEncoded[] = "Foo";
+
+        // $decodedBody->blocks = $decodedBodyBlocksEncoded;
+
+        // $post->body = json_encode($decodedBody);
+        // $post->save();
+        // //dd(json_encode($decodedBody));
 
         $post->tags()->sync( request()->input('tags') );
 
          return redirect(route('admin.post.index'))
-            ->with('FlashMessage', "Post  $post->title was succesfully updated.");
+            ->with('FlashMessage', "Post $post->title was succesfully updated.");
     }
 
     public function destroy(Post $post)

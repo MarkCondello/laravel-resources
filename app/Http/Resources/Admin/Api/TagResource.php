@@ -25,6 +25,7 @@ class TagResource extends JsonResource
             [
                 'label' => "Edit",
                 // 'icon' => 'fa fa-pencil',
+                'class' => 'button is-primary is-outlined',
                  'url' => route('admin.tag.update', $this->id),  
                 //'url' => '#',
             ],  

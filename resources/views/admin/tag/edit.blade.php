@@ -19,6 +19,8 @@
             </div>
             @error('title')<p class="help is-danger">{{ $message }}</p>@enderror
         </div>
+
+        <!-- ToDo: Could this be better if the user can choose a font awesome icon instead??? -->
         <div class="field">
             <label class="label">Upload Image</label>
             @if($tag)

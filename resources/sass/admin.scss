@@ -1,3 +1,24 @@
 @import '~bulma/bulma';
 
+@import '../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss';
+@import '../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss';
+
+
 @import './admin/components/flash-message';
+
+// ToDo: Split out to its own file
+.modal {
+    display: block;
+}
+
+.ellipsis-menu {
+    position: relative;
+
+    .ellipsis-dropdown {
+        position: absolute;
+        top:16px;
+        left: 0;
+        z-index: 2;
+    }
+}

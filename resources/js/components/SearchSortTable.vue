@@ -8,7 +8,6 @@
                 <slot name="actions"></slot>
             </div>
         </div>
-        <transition name="fade">
             <div v-if="loading" class="loading">
                 <div class="spinner">
                     <i class="fal fa-spinner fa-spin fa-4x"></i>

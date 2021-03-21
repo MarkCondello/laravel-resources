@@ -1,11 +1,11 @@
 <template>
-    <ul v-if="actions" class="vertical dropdown menu" data-dropdown-menu data-closing-time="2">
-        <li class="is-dropdown-submenu-parent">
-            <a href="#">
-                <i class="fal fa-ellipsis-h"></i>
+    <ul v-if="actions" class=" " @mouseout="hovered = false">
+        <li class="ellipsis-menu">
+            <a href="#" @mouseover="hovered = true">
+                <i class="fas fa-ellipsis-h"></i>
             </a>
-            <ul class="menu">
-                <li v-for="action in displayActions">
+            <ul v-show="hovered" class="ellipsis-dropdown"  @mouseover="hovered = true">
+                <li v-for="action in displayActions" >
                     <delete-button
                         v-if="action.type === 'delete'"
                         :action="action.url"
@@ -16,7 +16,7 @@
                             <i :class="action.icon"></i>
                             <span>{{ action.label }}</span>
                         </a>
-                        <ul class="menu">
+                        <ul >
                             <li v-for="nestedAction in action.actions">
                                 <form
                                     v-if="nestedAction.type === 'post'"
@@ -45,12 +45,14 @@
                     <form v-else-if="action.type === 'post'" :action="action.url" method="post">
                         <input type="hidden" name="_token" :value="csrf" />
                         <input type="hidden" :name="action.name" :value="action.value" />
-                        <button type="submit">
+                        <button type="submit" class="button">
                             <i :class="action.icon"></i>
                             <span>{{ action.label }}</span>
                         </button>
                     </form>
-                    <a v-else :href="action.url">
+                    <a v-else 
+                    :class="action.class"
+                    :href="action.url">
                         <i :class="action.icon"></i>
                         <span>{{ action.label }}</span>
                     </a>
@@ -69,6 +71,11 @@
             "delete-button": DeleteButton
         },
         props: ["actions"],
+        data() {
+            return {
+                hovered: false,
+            }
+        },
         computed: {
             displayActions() {
                 return this.actions.filter(action => {

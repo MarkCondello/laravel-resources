@@ -14,8 +14,20 @@ endif;
 
 if( request()->session()->has('FlashNotice') ):
     $messageData->text = request()->session()->get('FlashNotice');
-    $messageData->heading = 'Info!';
+    $messageData->heading = 'Info';
     $messageData->class = 'is-info';
+endif;
+
+if( request()->session()->has('FlashWarning') ):
+    $messageData->text = request()->session()->get('FlashWarning');
+    $messageData->heading = 'Warning!';
+    $messageData->class = 'is-warning';
+endif;
+
+if( request()->session()->has('FlashError') ):
+    $messageData->text = request()->session()->get('FlashError');
+    $messageData->heading = 'Error!';
+    $messageData->class = 'is-danger';
 endif;
 
 @endphp

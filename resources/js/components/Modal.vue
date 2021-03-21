@@ -1,7 +1,17 @@
 <template>
-    <div v-if="isOpen" id="modal" class="reveal" data-reveal>
-        <h5 class="title">{{ title }}</h5>
-        <div class="message" v-html="message"></div>
+
+<div class="modal" v-show="isOpen">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{ title }}</p>
+      <button class="delete" 
+        aria-label="close"
+        @click="onClose"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+        <p v-html="message"></p>
         <slot></slot>
         <v-form v-if="formData"
                 :action="formData.action"
@@ -12,34 +22,27 @@
                 :event-bus="formModalEventBus"
                 @saved="onFormSave"
         ></v-form>
-        <div class="button-line space-between">
-            <button v-if="actionText"
-                    type="button"
-                    class="button"
-                    :class="actionClass"
-                    @click="onAction"
+     </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success"
+            v-if="actionText"
+            type="button"
+            :class="actionClass"
+            @click="onAction"
             >
-                <span>{{ actionText }}</span>
-            </button>
-            <button v-if="cancelText"
-                    type="button"
-                    class="button"
-                    :class="cancelClass"
-                    @click="onCancel"
-            >
-                <span>{{ cancelText }}</span>
-            </button>
-        </div>
-        <button class="close-button"
-                type="button"
-                aria-label="Close modal"
-                @click="onClose"
+            <span>{{ actionText }}</span>
+      </button>
+      <button class="button" 
+            type="button"
+            aria-label="Close modal"
+            @click="onClose"
+            :class="cancelClass"
         >
-            <span aria-hidden="true">
-                <i class="fal fa-times"></i>
-            </span>
-        </button>
-    </div>
+            <span aria-hidden="true">{{ cancelText }}</span>   
+      </button>
+    </footer>
+  </div>
+</div>
 </template>
 
 <script>
@@ -60,7 +63,7 @@
                 actionText: 'Confirm',
                 cancelText: 'Cancel',
                 actionClass: 'button',
-                cancelClass: 'button hollow',
+                cancelClass: 'button is-outlined',
                 actionCallback: null,
                 cancelCallback: null,
                 modal: null,
@@ -141,3 +144,47 @@
         },
     }
 </script>
+
+
+<!-- 
+    <div v-if="isOpen" id="modal" class="reveal" data-reveal>
+        <h5 class="title">{{ title }}</h5>
+        <div class="message" v-html="message"></div>
+        <slot></slot>
+        <v-form v-if="formData"
+                :action="formData.action"
+                :method="formData.method"
+                :fields="formData.fields"
+                :values="formData.values"
+                :submit="false"
+                :event-bus="formModalEventBus"
+                @saved="onFormSave"
+        ></v-form>
+        <div class="button-line space-between">
+            <button v-if="actionText"
+                    type="button"
+                    class="button"
+                    :class="actionClass"
+                    @click="onAction"
+            >
+                <span>{{ actionText }}</span>
+            </button>
+            <button v-if="cancelText"
+                    type="button"
+                    class="button"
+                    :class="cancelClass"
+                    @click="onCancel"
+            >
+                <span>{{ cancelText }}</span>
+            </button>
+        </div>
+        <button class="close-button"
+                type="button"
+                aria-label="Close modal"
+                @click="onClose"
+        >
+            <span aria-hidden="true">
+                <i class="fal fa-times"></i>
+            </span>
+        </button>
+    </div> -->

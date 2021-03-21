@@ -33,6 +33,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "@editorjs/paragraph": "^2.8.0"
+        "@editorjs/paragraph": "^2.8.0",
+        "@fortawesome/fontawesome-free": "^5.15.3"
     }
 }

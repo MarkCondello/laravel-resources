@@ -1992,6 +1992,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "DeleteButton",
@@ -2009,11 +2019,12 @@ __webpack_require__.r(__webpack_exports__);
     click: function click() {
       console.log("reached click");
       this.eventBus.$emit('modalOpen', {
-        title: null,
+        title: 'Delete?',
         message: 'Are you sure you want to delete this item?',
         actionText: 'Yes, delete',
-        actionClass: 'danger',
-        actionCallback: this.doDelete
+        actionClass: 'is-danger',
+        actionCallback: this.doDelete,
+        cancelText: "No, exit"
       });
     },
     doDelete: function doDelete() {
@@ -2100,6 +2111,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "EllipsisMenu",
@@ -2107,6 +2120,11 @@ __webpack_require__.r(__webpack_exports__);
     "delete-button": _DeleteButton__WEBPACK_IMPORTED_MODULE_0__.default
   },
   props: ["actions"],
+  data: function data() {
+    return {
+      hovered: false
+    };
+  },
   computed: {
     displayActions: function displayActions() {
       return this.actions.filter(function (action) {
@@ -2317,6 +2335,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Modal",
@@ -2333,7 +2354,7 @@ __webpack_require__.r(__webpack_exports__);
       actionText: 'Confirm',
       cancelText: 'Cancel',
       actionClass: 'button',
-      cancelClass: 'button hollow',
+      cancelClass: 'button is-outlined',
       actionCallback: null,
       cancelCallback: null,
       modal: null,
@@ -2437,7 +2458,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _EllipsisMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EllipsisMenu */ "./resources/js/components/EllipsisMenu.vue");
-//
 //
 //
 //
@@ -2921,15 +2941,16 @@ if (editorJs) {
       postId = editorJs.dataset.postId,
       csrfMeta = document.querySelector("meta[name='csrf-token']").getAttribute("content"),
       ticketContent = "";
+  console.dir(postBodyTextArea);
 
   try {
-    ticketContent = JSON.parse(postBodyTextArea.innerHTML);
+    ticketContent = JSON.parse(postBodyTextArea.innerText);
   } catch (e) {
     ticketContent = {
       blocks: [{
         type: "paragraph",
         data: {
-          text: postBodyTextArea.innerHTML
+          text: postBodyTextArea.innerText
         }
       }]
     };
@@ -35613,10 +35634,10 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
+/***/ "./resources/sass/site.scss":
+/*!**********************************!*\
+  !*** ./resources/sass/site.scss ***!
+  \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -39236,28 +39257,34 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "delete-button" }, [
-    _c(
-      "form",
-      { ref: "deleteForm", attrs: { action: _vm.action, method: "post" } },
-      [
-        _c("input", {
-          attrs: { type: "hidden", name: "_token" },
-          domProps: { value: this.$root._data.csrf }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "hidden", name: "_method", value: "delete" }
-        })
-      ]
-    ),
-    _vm._v(" "),
-    _c("button", { attrs: { type: "button" }, on: { click: _vm.click } }, [
-      _c("i", { class: _vm.icon }),
+  return _c(
+    "form",
+    { ref: "deleteForm", attrs: { action: _vm.action, method: "post" } },
+    [
+      _c("input", {
+        attrs: { type: "hidden", name: "_token" },
+        domProps: { value: this.$root._data.csrf }
+      }),
       _vm._v(" "),
-      _c("span", [_vm._v("Delete")])
-    ])
-  ])
+      _c("input", {
+        attrs: { type: "hidden", name: "_method", value: "delete" }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "button is-danger",
+          attrs: { type: "button" },
+          on: { click: _vm.click }
+        },
+        [
+          _c("i", { class: _vm.icon }),
+          _vm._v(" "),
+          _c("span", [_vm._v("Delete")])
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -39286,16 +39313,46 @@ var render = function() {
     ? _c(
         "ul",
         {
-          staticClass: "vertical dropdown menu",
-          attrs: { "data-dropdown-menu": "", "data-closing-time": "2" }
+          staticClass: " ",
+          on: {
+            mouseout: function($event) {
+              _vm.hovered = false
+            }
+          }
         },
         [
-          _c("li", { staticClass: "is-dropdown-submenu-parent" }, [
-            _vm._m(0),
+          _c("li", { staticClass: "ellipsis-menu" }, [
+            _c(
+              "a",
+              {
+                attrs: { href: "#" },
+                on: {
+                  mouseover: function($event) {
+                    _vm.hovered = true
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-ellipsis-h" })]
+            ),
             _vm._v(" "),
             _c(
               "ul",
-              { staticClass: "menu" },
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.hovered,
+                    expression: "hovered"
+                  }
+                ],
+                staticClass: "ellipsis-dropdown",
+                on: {
+                  mouseover: function($event) {
+                    _vm.hovered = true
+                  }
+                }
+              },
               _vm._l(_vm.displayActions, function(action) {
                 return _c(
                   "li",
@@ -39314,7 +39371,6 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "ul",
-                            { staticClass: "menu" },
                             _vm._l(action.actions, function(nestedAction) {
                               return _c("li", [
                                 nestedAction.type === "post"
@@ -39391,18 +39447,29 @@ var render = function() {
                               domProps: { value: action.value }
                             }),
                             _vm._v(" "),
-                            _c("button", { attrs: { type: "submit" } }, [
-                              _c("i", { class: action.icon }),
-                              _vm._v(" "),
-                              _c("span", [_vm._v(_vm._s(action.label))])
-                            ])
+                            _c(
+                              "button",
+                              {
+                                staticClass: "button",
+                                attrs: { type: "submit" }
+                              },
+                              [
+                                _c("i", { class: action.icon }),
+                                _vm._v(" "),
+                                _c("span", [_vm._v(_vm._s(action.label))])
+                              ]
+                            )
                           ]
                         )
-                      : _c("a", { attrs: { href: action.url } }, [
-                          _c("i", { class: action.icon }),
-                          _vm._v(" "),
-                          _c("span", [_vm._v(_vm._s(action.label))])
-                        ])
+                      : _c(
+                          "a",
+                          { class: action.class, attrs: { href: action.url } },
+                          [
+                            _c("i", { class: action.icon }),
+                            _vm._v(" "),
+                            _c("span", [_vm._v(_vm._s(action.label))])
+                          ]
+                        )
                   ],
                   2
                 )
@@ -39414,16 +39481,7 @@ var render = function() {
       )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("i", { staticClass: "fal fa-ellipsis-h" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39651,86 +39709,94 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.isOpen
-    ? _c(
-        "div",
-        { staticClass: "reveal", attrs: { id: "modal", "data-reveal": "" } },
-        [
-          _c("h5", { staticClass: "title" }, [_vm._v(_vm._s(_vm.title))]),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "message",
-            domProps: { innerHTML: _vm._s(_vm.message) }
-          }),
-          _vm._v(" "),
-          _vm._t("default"),
-          _vm._v(" "),
-          _vm.formData
-            ? _c("v-form", {
-                attrs: {
-                  action: _vm.formData.action,
-                  method: _vm.formData.method,
-                  fields: _vm.formData.fields,
-                  values: _vm.formData.values,
-                  submit: false,
-                  "event-bus": _vm.formModalEventBus
-                },
-                on: { saved: _vm.onFormSave }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "button-line space-between" }, [
-            _vm.actionText
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "button",
-                    class: _vm.actionClass,
-                    attrs: { type: "button" },
-                    on: { click: _vm.onAction }
-                  },
-                  [_c("span", [_vm._v(_vm._s(_vm.actionText))])]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.cancelText
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "button",
-                    class: _vm.cancelClass,
-                    attrs: { type: "button" },
-                    on: { click: _vm.onCancel }
-                  },
-                  [_c("span", [_vm._v(_vm._s(_vm.cancelText))])]
-                )
-              : _vm._e()
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: _vm.isOpen,
+          expression: "isOpen"
+        }
+      ],
+      staticClass: "modal"
+    },
+    [
+      _c("div", { staticClass: "modal-background" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "modal-card" }, [
+        _c("header", { staticClass: "modal-card-head" }, [
+          _c("p", { staticClass: "modal-card-title" }, [
+            _vm._v(_vm._s(_vm.title))
           ]),
+          _vm._v(" "),
+          _c("button", {
+            staticClass: "delete",
+            attrs: { "aria-label": "close" },
+            on: { click: _vm.onClose }
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "section",
+          { staticClass: "modal-card-body" },
+          [
+            _c("p", { domProps: { innerHTML: _vm._s(_vm.message) } }),
+            _vm._v(" "),
+            _vm._t("default"),
+            _vm._v(" "),
+            _vm.formData
+              ? _c("v-form", {
+                  attrs: {
+                    action: _vm.formData.action,
+                    method: _vm.formData.method,
+                    fields: _vm.formData.fields,
+                    values: _vm.formData.values,
+                    submit: false,
+                    "event-bus": _vm.formModalEventBus
+                  },
+                  on: { saved: _vm.onFormSave }
+                })
+              : _vm._e()
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("footer", { staticClass: "modal-card-foot" }, [
+          _vm.actionText
+            ? _c(
+                "button",
+                {
+                  staticClass: "button is-success",
+                  class: _vm.actionClass,
+                  attrs: { type: "button" },
+                  on: { click: _vm.onAction }
+                },
+                [_c("span", [_vm._v(_vm._s(_vm.actionText))])]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "button",
             {
-              staticClass: "close-button",
+              staticClass: "button",
+              class: _vm.cancelClass,
               attrs: { type: "button", "aria-label": "Close modal" },
               on: { click: _vm.onClose }
             },
-            [_vm._m(0)]
+            [
+              _c("span", { attrs: { "aria-hidden": "true" } }, [
+                _vm._v(_vm._s(_vm.cancelText))
+              ])
+            ]
           )
-        ],
-        2
-      )
-    : _vm._e()
+        ])
+      ])
+    ]
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { attrs: { "aria-hidden": "true" } }, [
-      _c("i", { staticClass: "fal fa-times" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39753,202 +39819,197 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "search-sort-table", class: _vm.cssClass },
-    [
-      _c("div", { staticClass: "header" }, [
-        _c("div", { staticClass: "title" }, [
-          _c("h5", [_vm._v(_vm._s(_vm.items.length) + " Results")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "actions" }, [_vm._t("actions")], 2)
+  return _c("div", { staticClass: "search-sort-table", class: _vm.cssClass }, [
+    _c("div", { staticClass: "header" }, [
+      _c("div", { staticClass: "title" }, [
+        _c("h5", [_vm._v(_vm._s(_vm.items.length) + " Results")])
       ]),
       _vm._v(" "),
-      _c("transition", { attrs: { name: "fade" } }, [
-        _vm.loading
-          ? _c("div", { staticClass: "loading" }, [
-              _c("div", { staticClass: "spinner" }, [
-                _c("i", { staticClass: "fal fa-spinner fa-spin fa-4x" })
-              ])
-            ])
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _vm.items && _vm.items.length > 0
-        ? _c("table", [
-            _c("thead", [
-              _c(
-                "tr",
-                [
-                  _vm._l(_vm.columns, function(column) {
-                    return _c(
-                      "th",
-                      {
-                        class:
-                          (column.sortable ? "sortable" : "") +
-                          (column.align ? " align-" + column.align : ""),
-                        on: {
-                          click: function($event) {
-                            column.sortable ? _vm.sortColumn(column.name) : null
-                          }
-                        }
-                      },
-                      [
-                        _c("span", [_vm._v(_vm._s(column.label))]),
-                        _vm._v(" "),
-                        column.name === _vm.sort
-                          ? _c("i", {
-                              class:
-                                "fal fa-long-arrow-" +
-                                (_vm.dir === "desc" ? "up" : "down")
-                            })
-                          : _vm._e()
-                      ]
-                    )
-                  }),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(" ")])
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
+      _c("div", { staticClass: "actions" }, [_vm._t("actions")], 2)
+    ]),
+    _vm._v(" "),
+    _vm.loading ? _c("div", { staticClass: "loading" }, [_vm._m(0)]) : _vm._e(),
+    _vm._v(" "),
+    _vm.items && _vm.items.length > 0
+      ? _c("table", [
+          _c("thead", [
             _c(
-              "tbody",
-              _vm._l(_vm.items, function(item) {
-                return _c(
-                  "tr",
-                  {
-                    class: {
-                      toggled: item.toggleGroupItemClicked,
-                      show: _vm.itemGetShowAction(item)
-                    },
-                    style:
-                      (item.color ? "border-left: 8px solid" + item.color : "",
-                      item.toggle ? "display:none" : "")
-                  },
-                  [
-                    _vm._l(_vm.columns, function(column) {
-                      return _c(
-                        "td",
-                        {
-                          class:
-                            (column.align ? "align-" + column.align : "") +
-                            (column.editable ? " editable" : ""),
-                          attrs: { "data-header": column.label },
-                          on: {
-                            click: function($event) {
-                              return _vm.onCellClick(item, column)
-                            }
-                          }
-                        },
-                        [
-                          _c("span", { class: _vm.columnStyle(column, item) }, [
-                            typeof item[column.name] === "boolean"
-                              ? _c("span", [
-                                  item[column.name]
-                                    ? _c("span", [_vm._m(0, true)])
-                                    : _c("span", [_vm._m(1, true)])
-                                ])
-                              : _c("span", [_vm._v(_vm._s(item[column.name]))])
-                          ])
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    item.actions &&
-                    item.actions.filter(function(action) {
-                      return !action.hidden
-                    }).length
-                      ? _c("td", { staticClass: "actions-cell" }, [
-                          _c(
-                            "div",
-                            { staticClass: "actions" },
-                            [
-                              _c("ellipsis-menu", {
-                                attrs: { actions: item.actions }
-                              })
-                            ],
-                            1
-                          )
-                        ])
-                      : _vm._e()
-                  ],
-                  2
-                )
-              }),
-              0
-            )
-          ])
-        : _c("div", { staticClass: "no-items" }, [
-            _vm._m(2),
-            _vm._v(" "),
-            _c("p", [_vm._v("There are no items available.")])
-          ]),
-      _vm._v(" "),
-      _vm.pagination && _vm.pagination.last_page > 1
-        ? _c("nav", { attrs: { "aria-label": "pagination" } }, [
-            _c(
-              "ul",
-              { staticClass: "pagination text-center" },
+              "tr",
               [
-                _vm.pagination.current_page !== 1
-                  ? _c(
-                      "li",
-                      {
-                        on: {
-                          click: function($event) {
-                            return _vm.setPage(_vm.pagination.current_page - 1)
-                          }
-                        }
-                      },
-                      [_vm._m(3)]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.pagination.last_page, function(page) {
+                _vm._l(_vm.columns, function(column) {
                   return _c(
-                    "li",
+                    "th",
                     {
-                      class: { current: _vm.pagination.current_page === page },
+                      class:
+                        (column.sortable ? "sortable" : "") +
+                        (column.align ? " align-" + column.align : ""),
                       on: {
                         click: function($event) {
-                          return _vm.setPage(page)
+                          column.sortable ? _vm.sortColumn(column.name) : null
                         }
                       }
                     },
                     [
-                      _c("button", { attrs: { type: "button" } }, [
-                        _vm._v(_vm._s(page))
-                      ])
+                      _c("span", [_vm._v(_vm._s(column.label))]),
+                      _vm._v(" "),
+                      column.name === _vm.sort
+                        ? _c("i", {
+                            class:
+                              "fal fa-long-arrow-" +
+                              (_vm.dir === "desc" ? "up" : "down")
+                          })
+                        : _vm._e()
                     ]
                   )
                 }),
                 _vm._v(" "),
-                _vm.pagination.current_page !== _vm.pagination.last_page
-                  ? _c(
-                      "li",
-                      {
-                        on: {
-                          click: function($event) {
-                            return _vm.setPage(_vm.pagination.current_page + 1)
-                          }
-                        }
-                      },
-                      [_vm._m(4)]
-                    )
-                  : _vm._e()
+                _c("th", [_vm._v(" ")])
               ],
               2
             )
-          ])
-        : _vm._e()
-    ],
-    1
-  )
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.items, function(item) {
+              return _c(
+                "tr",
+                {
+                  class: {
+                    toggled: item.toggleGroupItemClicked,
+                    show: _vm.itemGetShowAction(item)
+                  },
+                  style:
+                    (item.color ? "border-left: 8px solid" + item.color : "",
+                    item.toggle ? "display:none" : "")
+                },
+                [
+                  _vm._l(_vm.columns, function(column) {
+                    return _c(
+                      "td",
+                      {
+                        class:
+                          (column.align ? "align-" + column.align : "") +
+                          (column.editable ? " editable" : ""),
+                        attrs: { "data-header": column.label },
+                        on: {
+                          click: function($event) {
+                            return _vm.onCellClick(item, column)
+                          }
+                        }
+                      },
+                      [
+                        _c("span", { class: _vm.columnStyle(column, item) }, [
+                          typeof item[column.name] === "boolean"
+                            ? _c("span", [
+                                item[column.name]
+                                  ? _c("span", [_vm._m(1, true)])
+                                  : _c("span", [_vm._m(2, true)])
+                              ])
+                            : _c("span", [_vm._v(_vm._s(item[column.name]))])
+                        ])
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  item.actions &&
+                  item.actions.filter(function(action) {
+                    return !action.hidden
+                  }).length
+                    ? _c("td", { staticClass: "actions-cell" }, [
+                        _c(
+                          "div",
+                          { staticClass: "actions" },
+                          [
+                            _c("ellipsis-menu", {
+                              attrs: { actions: item.actions }
+                            })
+                          ],
+                          1
+                        )
+                      ])
+                    : _vm._e()
+                ],
+                2
+              )
+            }),
+            0
+          )
+        ])
+      : _c("div", { staticClass: "no-items" }, [
+          _vm._m(3),
+          _vm._v(" "),
+          _c("p", [_vm._v("There are no items available.")])
+        ]),
+    _vm._v(" "),
+    _vm.pagination && _vm.pagination.last_page > 1
+      ? _c("nav", { attrs: { "aria-label": "pagination" } }, [
+          _c(
+            "ul",
+            { staticClass: "pagination text-center" },
+            [
+              _vm.pagination.current_page !== 1
+                ? _c(
+                    "li",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.setPage(_vm.pagination.current_page - 1)
+                        }
+                      }
+                    },
+                    [_vm._m(4)]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.pagination.last_page, function(page) {
+                return _c(
+                  "li",
+                  {
+                    class: { current: _vm.pagination.current_page === page },
+                    on: {
+                      click: function($event) {
+                        return _vm.setPage(page)
+                      }
+                    }
+                  },
+                  [
+                    _c("button", { attrs: { type: "button" } }, [
+                      _vm._v(_vm._s(page))
+                    ])
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _vm.pagination.current_page !== _vm.pagination.last_page
+                ? _c(
+                    "li",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.setPage(_vm.pagination.current_page + 1)
+                        }
+                      }
+                    },
+                    [_vm._m(5)]
+                  )
+                : _vm._e()
+            ],
+            2
+          )
+        ])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "spinner" }, [
+      _c("i", { staticClass: "fal fa-spinner fa-spin fa-4x" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -52211,7 +52272,7 @@ Vue.compile = compileToFunctions;
 /******/ 		
 /******/ 		var deferredModules = [
 /******/ 			["./resources/js/admin.js"],
-/******/ 			["./resources/sass/app.scss"],
+/******/ 			["./resources/sass/site.scss"],
 /******/ 			["./resources/sass/admin.scss"]
 /******/ 		];
 /******/ 		// no chunk on demand loading

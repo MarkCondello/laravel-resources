@@ -67,7 +67,6 @@
                     </select>
                 </div>
                 @error('tags')<p class="help is-danger">{{ $message }}</p>@enderror
-
             </div>
         </div>
         @endif

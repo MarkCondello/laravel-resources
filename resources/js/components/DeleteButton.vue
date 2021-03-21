@@ -1,19 +1,29 @@
 <template>
-    <div class="delete-button">
-        <form :action="action"
-              method="post"
-              ref="deleteForm"
-              >
-            <input type="hidden" name="_token" :value="this.$root._data.csrf">
-            <input type="hidden" name="_method" value="delete">
-        </form>
-        <button type="button" @click="click">
-            <i :class="icon"></i>
-            <span>Delete</span>
+    <form :action="action"
+        method="post"
+        ref="deleteForm"
+        >
+        <input type="hidden" name="_token" :value="this.$root._data.csrf">
+        <input type="hidden" name="_method" value="delete">
+        <button 
+            class="button is-danger"
+            type="button"
+            @click="click">
+                <i :class="icon"></i>
+                <span>Delete</span>
         </button>
-    </div>
-</template>
-
+    </form>
+ </template>
+ 
+ <script>
+ export default {
+ 
+ }
+ </script>
+ 
+ <style>
+ 
+ </style>
 <script>
     import Modal from './Modal';
 
@@ -34,11 +44,12 @@
             click() {
                 console.log("reached click")
                 this.eventBus.$emit('modalOpen', {
-                    title: null,
+                    title: 'Delete?',
                     message: 'Are you sure you want to delete this item?',
                     actionText: 'Yes, delete',
-                    actionClass: 'danger',
+                    actionClass: 'is-danger',
                     actionCallback: this.doDelete,
+                    cancelText: "No, exit"
                 });
             },
             doDelete() {
