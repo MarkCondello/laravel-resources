@@ -67,7 +67,7 @@ In order to connect to the db in the container make sure the port 3306 is availa
 ``````
 
 Check other applications running on port 3306
-```lsof -i tcp:3000 ```
+```lsof -i tcp:3306 ```
 
 
 Next we can run the sail command to start up the environment:

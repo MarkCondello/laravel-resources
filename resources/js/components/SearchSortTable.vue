@@ -8,9 +8,10 @@
                 <slot name="actions"></slot>
             </div>
         </div>
+        <transition name="fade">
             <div v-if="loading" class="loading">
                 <div class="spinner">
-                    <i class="fal fa-spinner fa-spin fa-4x"></i>
+                    <i class="fas fa-spinner fa-spin fa-4x"></i>
                 </div>
             </div>
         </transition>
@@ -285,6 +286,10 @@
 </script>
 
 <style scoped>
+.search-sort-table table{
+    width: 100%;
+}
+
 .fade-enter-active {
     transition: opacity 50ms;
 }

@@ -101,7 +101,7 @@ class PostController extends Controller
         $post->save();
         $post->tags()->sync( request()->input('tags') );
 
-        return redirect(route('admin.post.index'))
+        return redirect(route('admin.post.update', $post))
         ->with('FlashMessage', "Post $post->title was succesfully created.");
     }
 

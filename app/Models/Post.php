@@ -28,6 +28,11 @@ class Post extends Model
                 // 'sortable' => true,
             ],
             (object)[
+                'name' => 'tag',
+                'label' => 'Tag',
+                // 'sortable' => true,
+            ],
+            (object)[
                 'name' => 'created',
                 'label' => 'Written on',
                 // 'sortable' => true,

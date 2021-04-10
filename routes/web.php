@@ -16,48 +16,11 @@ use App\Http\Controllers\Site\TagController;
 |
 */
 
-// SHould have a site group
+// Should have a site group
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::get('tag/{tagName}', [TagController::class, 'tagsPostList'])->name('tag.post.list');
 Route::get('tag/{tagName}/{postSlug}', [TagController::class, 'tagsPostShow'])->name('tag.post.show');
-
-
-
-//ToDo: Replace all this with a dynamically created links from post categories and their posts instead
-Route::group([
-    'prefix' => 'eloquent',
-    'as' => 'eloquent.',
-
-], function(){
-    Route::get('/', function(){
-        return view('site.posts.list');
-    })->name('list');
-
-    Route::get('/one-to-one', function(){
-        return view('site.posts.eloquent.one-to-one');
-    })->name('one-to-one');
-
-    Route::get('/one-to-many', function(){
-        return view('site.posts.eloquent.one-to-many');
-    })->name('one-to-many');
-
-    Route::get('/many-to-many', function(){
-        return view('site.posts.eloquent.many-to-many');
-    })->name('many-to-many');
-
-    Route::get('/has-many-through', function(){
-        return view('site.posts.eloquent.has-many-through');
-    })->name('has-many-through');
-
-    Route::get('/morph-to-morph-many', function(){
-        return view('site.posts.eloquent.morph-to-morph-many');
-    })->name('morph-to-morph-many');
-
-    Route::get('/morph-many-to-many', function(){
-        return view('site.posts.eloquent.morph-many-to-many');
-    })->name('morph-many-to-many');
-});
  
 Auth::routes();
 

@@ -2566,6 +2566,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7504,7 +7505,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active[data-v-5f42ef26] {\n    transition: opacity 50ms;\n}\n.fade-leave-active[data-v-5f42ef26] {\n    transition: opacity 200ms;\n}\n.fade-enter[data-v-5f42ef26],\n.fade-leave-to[data-v-5f42ef26] {\n    opacity: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.search-sort-table table[data-v-5f42ef26]{\n    width: 100%;\n}\n.fade-enter-active[data-v-5f42ef26] {\n    transition: opacity 50ms;\n}\n.fade-leave-active[data-v-5f42ef26] {\n    transition: opacity 200ms;\n}\n.fade-enter[data-v-5f42ef26],\n.fade-leave-to[data-v-5f42ef26] {\n    opacity: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39819,197 +39820,202 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "search-sort-table", class: _vm.cssClass }, [
-    _c("div", { staticClass: "header" }, [
-      _c("div", { staticClass: "title" }, [
-        _c("h5", [_vm._v(_vm._s(_vm.items.length) + " Results")])
+  return _c(
+    "div",
+    { staticClass: "search-sort-table", class: _vm.cssClass },
+    [
+      _c("div", { staticClass: "header" }, [
+        _c("div", { staticClass: "title" }, [
+          _c("h5", [_vm._v(_vm._s(_vm.items.length) + " Results")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "actions" }, [_vm._t("actions")], 2)
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "actions" }, [_vm._t("actions")], 2)
-    ]),
-    _vm._v(" "),
-    _vm.loading ? _c("div", { staticClass: "loading" }, [_vm._m(0)]) : _vm._e(),
-    _vm._v(" "),
-    _vm.items && _vm.items.length > 0
-      ? _c("table", [
-          _c("thead", [
-            _c(
-              "tr",
-              [
-                _vm._l(_vm.columns, function(column) {
-                  return _c(
-                    "th",
-                    {
-                      class:
-                        (column.sortable ? "sortable" : "") +
-                        (column.align ? " align-" + column.align : ""),
-                      on: {
-                        click: function($event) {
-                          column.sortable ? _vm.sortColumn(column.name) : null
-                        }
-                      }
-                    },
-                    [
-                      _c("span", [_vm._v(_vm._s(column.label))]),
-                      _vm._v(" "),
-                      column.name === _vm.sort
-                        ? _c("i", {
-                            class:
-                              "fal fa-long-arrow-" +
-                              (_vm.dir === "desc" ? "up" : "down")
-                          })
-                        : _vm._e()
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _c("th", [_vm._v(" ")])
-              ],
-              2
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.items, function(item) {
-              return _c(
+      _c("transition", { attrs: { name: "fade" } }, [
+        _vm.loading
+          ? _c("div", { staticClass: "loading" }, [
+              _c("div", { staticClass: "spinner" }, [
+                _c("i", { staticClass: "fas fa-spinner fa-spin fa-4x" })
+              ])
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm.items && _vm.items.length > 0
+        ? _c("table", [
+            _c("thead", [
+              _c(
                 "tr",
-                {
-                  class: {
-                    toggled: item.toggleGroupItemClicked,
-                    show: _vm.itemGetShowAction(item)
-                  },
-                  style:
-                    (item.color ? "border-left: 8px solid" + item.color : "",
-                    item.toggle ? "display:none" : "")
-                },
                 [
                   _vm._l(_vm.columns, function(column) {
                     return _c(
-                      "td",
+                      "th",
                       {
                         class:
-                          (column.align ? "align-" + column.align : "") +
-                          (column.editable ? " editable" : ""),
-                        attrs: { "data-header": column.label },
+                          (column.sortable ? "sortable" : "") +
+                          (column.align ? " align-" + column.align : ""),
                         on: {
                           click: function($event) {
-                            return _vm.onCellClick(item, column)
+                            column.sortable ? _vm.sortColumn(column.name) : null
                           }
                         }
                       },
                       [
-                        _c("span", { class: _vm.columnStyle(column, item) }, [
-                          typeof item[column.name] === "boolean"
-                            ? _c("span", [
-                                item[column.name]
-                                  ? _c("span", [_vm._m(1, true)])
-                                  : _c("span", [_vm._m(2, true)])
-                              ])
-                            : _c("span", [_vm._v(_vm._s(item[column.name]))])
-                        ])
+                        _c("span", [_vm._v(_vm._s(column.label))]),
+                        _vm._v(" "),
+                        column.name === _vm.sort
+                          ? _c("i", {
+                              class:
+                                "fal fa-long-arrow-" +
+                                (_vm.dir === "desc" ? "up" : "down")
+                            })
+                          : _vm._e()
                       ]
                     )
                   }),
                   _vm._v(" "),
-                  item.actions &&
-                  item.actions.filter(function(action) {
-                    return !action.hidden
-                  }).length
-                    ? _c("td", { staticClass: "actions-cell" }, [
-                        _c(
-                          "div",
-                          { staticClass: "actions" },
-                          [
-                            _c("ellipsis-menu", {
-                              attrs: { actions: item.actions }
-                            })
-                          ],
-                          1
-                        )
-                      ])
-                    : _vm._e()
+                  _c("th", [_vm._v(" ")])
                 ],
                 2
               )
-            }),
-            0
-          )
-        ])
-      : _c("div", { staticClass: "no-items" }, [
-          _vm._m(3),
-          _vm._v(" "),
-          _c("p", [_vm._v("There are no items available.")])
-        ]),
-    _vm._v(" "),
-    _vm.pagination && _vm.pagination.last_page > 1
-      ? _c("nav", { attrs: { "aria-label": "pagination" } }, [
-          _c(
-            "ul",
-            { staticClass: "pagination text-center" },
-            [
-              _vm.pagination.current_page !== 1
-                ? _c(
-                    "li",
-                    {
-                      on: {
-                        click: function($event) {
-                          return _vm.setPage(_vm.pagination.current_page - 1)
-                        }
-                      }
-                    },
-                    [_vm._m(4)]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._l(_vm.pagination.last_page, function(page) {
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.items, function(item) {
                 return _c(
-                  "li",
+                  "tr",
                   {
-                    class: { current: _vm.pagination.current_page === page },
-                    on: {
-                      click: function($event) {
-                        return _vm.setPage(page)
-                      }
-                    }
+                    class: {
+                      toggled: item.toggleGroupItemClicked,
+                      show: _vm.itemGetShowAction(item)
+                    },
+                    style:
+                      (item.color ? "border-left: 8px solid" + item.color : "",
+                      item.toggle ? "display:none" : "")
                   },
                   [
-                    _c("button", { attrs: { type: "button" } }, [
-                      _vm._v(_vm._s(page))
-                    ])
-                  ]
+                    _vm._l(_vm.columns, function(column) {
+                      return _c(
+                        "td",
+                        {
+                          class:
+                            (column.align ? "align-" + column.align : "") +
+                            (column.editable ? " editable" : ""),
+                          attrs: { "data-header": column.label },
+                          on: {
+                            click: function($event) {
+                              return _vm.onCellClick(item, column)
+                            }
+                          }
+                        },
+                        [
+                          _c("span", { class: _vm.columnStyle(column, item) }, [
+                            typeof item[column.name] === "boolean"
+                              ? _c("span", [
+                                  item[column.name]
+                                    ? _c("span", [_vm._m(0, true)])
+                                    : _c("span", [_vm._m(1, true)])
+                                ])
+                              : _c("span", [_vm._v(_vm._s(item[column.name]))])
+                          ])
+                        ]
+                      )
+                    }),
+                    _vm._v(" "),
+                    item.actions &&
+                    item.actions.filter(function(action) {
+                      return !action.hidden
+                    }).length
+                      ? _c("td", { staticClass: "actions-cell" }, [
+                          _c(
+                            "div",
+                            { staticClass: "actions" },
+                            [
+                              _c("ellipsis-menu", {
+                                attrs: { actions: item.actions }
+                              })
+                            ],
+                            1
+                          )
+                        ])
+                      : _vm._e()
+                  ],
+                  2
                 )
               }),
-              _vm._v(" "),
-              _vm.pagination.current_page !== _vm.pagination.last_page
-                ? _c(
+              0
+            )
+          ])
+        : _c("div", { staticClass: "no-items" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("p", [_vm._v("There are no items available.")])
+          ]),
+      _vm._v(" "),
+      _vm.pagination && _vm.pagination.last_page > 1
+        ? _c("nav", { attrs: { "aria-label": "pagination" } }, [
+            _c(
+              "ul",
+              { staticClass: "pagination text-center" },
+              [
+                _vm.pagination.current_page !== 1
+                  ? _c(
+                      "li",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.setPage(_vm.pagination.current_page - 1)
+                          }
+                        }
+                      },
+                      [_vm._m(3)]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.pagination.last_page, function(page) {
+                  return _c(
                     "li",
                     {
+                      class: { current: _vm.pagination.current_page === page },
                       on: {
                         click: function($event) {
-                          return _vm.setPage(_vm.pagination.current_page + 1)
+                          return _vm.setPage(page)
                         }
                       }
                     },
-                    [_vm._m(5)]
+                    [
+                      _c("button", { attrs: { type: "button" } }, [
+                        _vm._v(_vm._s(page))
+                      ])
+                    ]
                   )
-                : _vm._e()
-            ],
-            2
-          )
-        ])
-      : _vm._e()
-  ])
+                }),
+                _vm._v(" "),
+                _vm.pagination.current_page !== _vm.pagination.last_page
+                  ? _c(
+                      "li",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.setPage(_vm.pagination.current_page + 1)
+                          }
+                        }
+                      },
+                      [_vm._m(4)]
+                    )
+                  : _vm._e()
+              ],
+              2
+            )
+          ])
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "spinner" }, [
-      _c("i", { staticClass: "fal fa-spinner fa-spin fa-4x" })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
