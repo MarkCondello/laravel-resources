@@ -11,12 +11,32 @@
         <hr>
         @if(isset($post->body))
         <div class="field">
-             <!-- ToDo: For the website side, use editor js with no editing options -->
-            @php $blocks = json_decode($post->body)->blocks; @endphp
+             @php $blocks = json_decode($post->body)->blocks; @endphp
+
             @foreach($blocks as $block)
                @switch($block->type)
+                    @case('list')
+                        @if($block->data->style === "unordered")
+                        <ul>
+                            @foreach($block->data->items as $item)
+                            <li>{{$item}}</li>
+                            @endforeach
+                        </ul>
+                        @elseif($block->data->style === "ordered")
+                        <ol>
+                            @foreach($block->data->items as $item)
+                                <li>{{$item}}</li>
+                            @endforeach
+                        </ol>
+                        @endif
+                    @break
+                    @case('code')
+                    <div>
+                        <code>{!! $block->data->code  !!}</code>
+                    </div>
+                    @break
                     @case('paragraph')
-                        {!! htmlspecialchars_decode($block->data->text, ENT_QUOTES) !!}
+                    <p>{!! htmlspecialchars_decode($block->data->text, ENT_QUOTES) !!}</p>
                     @break
                     @case('image')
                     <div>

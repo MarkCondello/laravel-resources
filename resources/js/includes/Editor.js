@@ -1,6 +1,5 @@
 import EditorJS from '@editorjs/editorjs';
 import ImageTool from '@editorjs/image';
-
 import InlineCode from '@editorjs/inline-code';
 import Table from '@editorjs/table';
 import List from '@editorjs/list';

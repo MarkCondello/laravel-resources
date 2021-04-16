@@ -1,15 +1,10 @@
 @extends('layouts.site')
 
 @section('content')
-<div class="grid grid-cols-1 md:grid-cols-2">
-
-<!-- Run a loop of the tags with posts here -->
-    <!-- 0 % 4 = 0; 4%4=0 ; 1%4 = 1; 5%4= 1; 2%4=2; 6%4=2;10%4=2; 3%4=3=3; 7%4=3; -->
+<div class="grid grid-cols-1 md:grid-cols-2"> 
 @foreach($tags as $key=>$tag)
     @if(count($tag->posts)  )
-   
         <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
-
             <div class="flex items-center">
                 <img src="{{ asset( isset($tag->image) && isset($tag->image->first()->original_name) ? 'images/' . $tag->image->first()->original_name : 'images/logos/laravel.png' )   }}" width="30" alt="{{$tag->name}} image."/>
                 <div class="ml-4 text-lg leading-7 font-semibold">
@@ -26,8 +21,6 @@
         </div>
     @endif
 @endforeach
-
-
     <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
         <div class="flex items-center">
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

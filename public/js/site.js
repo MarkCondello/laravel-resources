@@ -1991,9 +1991,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      opened: null
+    };
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    this.opened = this.$cookies.get("isOpened") === "true";
+  },
+  methods: {
+    handleToggle: function handleToggle() {
+      this.opened = !this.opened;
+      this.$cookies.set("isOpened", this.opened);
+    }
   }
 });
 
@@ -37507,6 +37523,156 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/vue-cookies/vue-cookies.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue-cookies/vue-cookies.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+/**
+ * Vue Cookies v1.7.4
+ * https://github.com/cmp-cc/vue-cookies
+ *
+ * Copyright 2016, cmp-cc
+ * Released under the MIT license
+ */
+
+(function () {
+
+  var defaultConfig = {
+    expires: '1d',
+    path: '; path=/',
+    domain: '',
+    secure: '',
+    sameSite: '; SameSite=Lax'
+  };
+
+  var VueCookies = {
+    // install of Vue
+    install: function (Vue) {
+      Vue.prototype.$cookies = this;
+      Vue.$cookies = this;
+    },
+    config: function (expireTimes, path, domain, secure, sameSite) {
+      defaultConfig.expires = expireTimes ? expireTimes : '1d';
+      defaultConfig.path = path ? '; path=' + path : '; path=/';
+      defaultConfig.domain = domain ? '; domain=' + domain : '';
+      defaultConfig.secure = secure ? '; Secure' : '';
+      defaultConfig.sameSite = sameSite ? '; SameSite=' + sameSite : '; SameSite=Lax';
+    },
+    get: function (key) {
+      var value = decodeURIComponent(document.cookie.replace(new RegExp('(?:(?:^|.*;)\\s*' + encodeURIComponent(key).replace(/[\-\.\+\*]/g, '\\$&') + '\\s*\\=\\s*([^;]*).*$)|^.*$'), '$1')) || null;
+
+      if (value && value.substring(0, 1) === '{' && value.substring(value.length - 1, value.length) === '}') {
+        try {
+          value = JSON.parse(value);
+        } catch (e) {
+          return value;
+        }
+      }
+      return value;
+    },
+    set: function (key, value, expireTimes, path, domain, secure, sameSite) {
+      if (!key) {
+        throw new Error('Cookie name is not find in first argument.');
+      } else if (/^(?:expires|max\-age|path|domain|secure|SameSite)$/i.test(key)) {
+        throw new Error('Cookie key name illegality, Cannot be set to ["expires","max-age","path","domain","secure","SameSite"]\t current key name: ' + key);
+      }
+      // support json object
+      if (value && value.constructor === Object) {
+        value = JSON.stringify(value);
+      }
+      var _expires = '';
+      expireTimes = expireTimes == undefined ? defaultConfig.expires : expireTimes;
+      if (expireTimes && expireTimes != 0) {
+        switch (expireTimes.constructor) {
+          case Number:
+            if (expireTimes === Infinity || expireTimes === -1) _expires = '; expires=Fri, 31 Dec 9999 23:59:59 GMT';
+            else _expires = '; max-age=' + expireTimes;
+            break;
+          case String:
+            if (/^(?:\d+(y|m|d|h|min|s))$/i.test(expireTimes)) {
+              // get capture number group
+              var _expireTime = expireTimes.replace(/^(\d+)(?:y|m|d|h|min|s)$/i, '$1');
+              // get capture type group , to lower case
+              switch (expireTimes.replace(/^(?:\d+)(y|m|d|h|min|s)$/i, '$1').toLowerCase()) {
+                  // Frequency sorting
+                case 'm':
+                  _expires = '; max-age=' + +_expireTime * 2592000;
+                  break; // 60 * 60 * 24 * 30
+                case 'd':
+                  _expires = '; max-age=' + +_expireTime * 86400;
+                  break; // 60 * 60 * 24
+                case 'h':
+                  _expires = '; max-age=' + +_expireTime * 3600;
+                  break; // 60 * 60
+                case 'min':
+                  _expires = '; max-age=' + +_expireTime * 60;
+                  break; // 60
+                case 's':
+                  _expires = '; max-age=' + _expireTime;
+                  break;
+                case 'y':
+                  _expires = '; max-age=' + +_expireTime * 31104000;
+                  break; // 60 * 60 * 24 * 30 * 12
+                default:
+                  new Error('unknown exception of "set operation"');
+              }
+            } else {
+              _expires = '; expires=' + expireTimes;
+            }
+            break;
+          case Date:
+            _expires = '; expires=' + expireTimes.toUTCString();
+            break;
+        }
+      }
+      document.cookie =
+          encodeURIComponent(key) + '=' + encodeURIComponent(value) +
+          _expires +
+          (domain ? '; domain=' + domain : defaultConfig.domain) +
+          (path ? '; path=' + path : defaultConfig.path) +
+          (secure == undefined ? defaultConfig.secure : secure ? '; Secure' : '') +
+          (sameSite == undefined ? defaultConfig.sameSite : (sameSite ? '; SameSite=' + sameSite : ''));
+      return this;
+    },
+    remove: function (key, path, domain) {
+      if (!key || !this.isKey(key)) {
+        return false;
+      }
+      document.cookie = encodeURIComponent(key) +
+          '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' +
+          (domain ? '; domain=' + domain : defaultConfig.domain) +
+          (path ? '; path=' + path : defaultConfig.path) +
+          '; SameSite=Lax';
+      return this;
+    },
+    isKey: function (key) {
+      return (new RegExp('(?:^|;\\s*)' + encodeURIComponent(key).replace(/[\-\.\+\*]/g, '\\$&') + '\\s*\\=')).test(document.cookie);
+    },
+    keys: function () {
+      if (!document.cookie) return [];
+      var _keys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, '').split(/\s*(?:\=[^;]*)?;\s*/);
+      for (var _index = 0; _index < _keys.length; _index++) {
+        _keys[_index] = decodeURIComponent(_keys[_index]);
+      }
+      return _keys;
+    }
+  };
+
+  if (true) {
+    module.exports = VueCookies;
+  } else {}
+  // vue-cookies can exist independently,no dependencies library
+  if (typeof window !== 'undefined') {
+    window.$cookies = VueCookies;
+  }
+
+})();
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue ***!
@@ -37595,32 +37761,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Example Component")
+          ]),
+          _vm._v(" "),
+          _vm.opened
+            ? _c("div", { staticClass: "card-body" }, [
+                _vm._v(
+                  "\n                    I'm an example component opened.\n                "
+                )
+              ])
+            : _c("div", { staticClass: "card-body" }, [
+                _vm._v(
+                  "\n                    I'm an example component closed.\n                "
+                )
+              ]),
+          _vm._v(" "),
+          _c("button", { on: { click: _vm.handleToggle } }, [
+            _vm._v("Toggle Open val")
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -49835,6 +50004,8 @@ var __webpack_exports__ = {};
   \******************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _includes_Editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./includes/Editor */ "./resources/js/includes/Editor.js");
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_1__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -49845,6 +50016,14 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
+
+Vue.use((vue_cookies__WEBPACK_IMPORTED_MODULE_1___default()));
+Vue.$cookies.config(0, '/');
+
+if (Vue.$cookies.get("isOpened") === null) {
+  console.log("reached is null check");
+  Vue.$cookies.set("isOpened", true);
+}
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -49854,6 +50033,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
 /**

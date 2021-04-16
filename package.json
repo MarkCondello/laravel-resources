@@ -34,6 +34,7 @@
     },
     "dependencies": {
         "@editorjs/paragraph": "^2.8.0",
-        "@fortawesome/fontawesome-free": "^5.15.3"
+        "@fortawesome/fontawesome-free": "^5.15.3",
+        "vue-cookies": "^1.7.4"
     }
 }

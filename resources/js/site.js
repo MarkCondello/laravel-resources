@@ -1,5 +1,6 @@
 import "./includes/Editor";
 
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -9,6 +10,16 @@ import "./includes/Editor";
 require('./bootstrap');
 
 window.Vue = require('vue').default;
+
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies);
+Vue.$cookies.config(0, '/');
+
+
+if(Vue.$cookies.get("isOpened") === null){
+    console.log("reached is null check")
+    Vue.$cookies.set("isOpened", true);
+}
 
 /**
  * The following block of code may be used to automatically register your
@@ -29,7 +40,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 if(document.getElementById('app')){
-    const app = new Vue({
+     const app = new Vue({
         el: '#app',
     });
 }

@@ -2169,9 +2169,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      opened: null
+    };
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    this.opened = this.$cookies.get("isOpened") === "true";
+  },
+  methods: {
+    handleToggle: function handleToggle() {
+      this.opened = !this.opened;
+      this.$cookies.set("isOpened", this.opened);
+    }
   }
 });
 
@@ -39505,32 +39521,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Example Component")
+          ]),
+          _vm._v(" "),
+          _vm.opened
+            ? _c("div", { staticClass: "card-body" }, [
+                _vm._v(
+                  "\n                    I'm an example component opened.\n                "
+                )
+              ])
+            : _c("div", { staticClass: "card-body" }, [
+                _vm._v(
+                  "\n                    I'm an example component closed.\n                "
+                )
+              ]),
+          _vm._v(" "),
+          _c("button", { on: { click: _vm.handleToggle } }, [
+            _vm._v("Toggle Open val")
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
