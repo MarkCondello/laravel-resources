@@ -70,8 +70,6 @@ class Post extends Model
         return $this->morphMany(File::class, 'uploadable');
     }
 
-
-
     public function share($user = null){
         $user = $user ?: auth()->user();
         return $this->sharable()->attach($user);
@@ -79,6 +77,10 @@ class Post extends Model
 
     public function sharable(){
         return $this->morphToMany(User::class, 'sharable');
- 
+    }
+
+    public function getUrl()
+    {
+        return route("tag.post.show", ['tagName' =>  $this->tags()->first()->name, 'postSlug' => $this->slug]);
     }
 }

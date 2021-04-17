@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Tag;
 use App\Http\Requests\Admin\Post\PostRequest;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Request as StorageRequest;
 use App\Services\File\FileService;
+use App\Notifications\PostContentAdded;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PostCreated;
 
 class PostController extends Controller
 {
@@ -61,28 +64,11 @@ class PostController extends Controller
         }
 
         $post->update($request->except('tags', 'link_name', 'link_url' ));
-
-        // $decodedBody = json_decode($request->input('body'));
-        // $decodedBodyBlocks = $decodedBody->blocks;
-        // $decodedBodyBlocksEncoded = [];
-
-        // foreach($decodedBodyBlocks as $block){
-        //     if($block->type === "paragraph"){
-        //          $block->data->text = htmlspecialchars_decode($block->data->text, ENT_QUOTES);
-        //     }  
-        //     $decodedBodyBlocksEncoded[] = $block;
-        // }
-        // // $decodedBodyBlocksEncoded[] = "Foo";
-
-        // $decodedBody->blocks = $decodedBodyBlocksEncoded;
-
-        // $post->body = json_encode($decodedBody);
-        // $post->save();
-        // //dd(json_encode($decodedBody));
-
         $post->tags()->sync( request()->input('tags') );
 
-         return redirect(route('admin.post.index'))
+        User::find(1)->notify(new PostContentAdded($post));
+
+        return redirect(route('admin.post.index'))
             ->with('FlashMessage', "Post $post->title was succesfully updated.");
     }
 
@@ -100,6 +86,8 @@ class PostController extends Controller
         $post->user_id = auth()->user()->id;
         $post->save();
         $post->tags()->sync( request()->input('tags') );
+
+        Mail::to("test@test.com")->send(new PostCreated($post));
 
         return redirect(route('admin.post.update', $post))
         ->with('FlashMessage', "Post $post->title was succesfully created.");
