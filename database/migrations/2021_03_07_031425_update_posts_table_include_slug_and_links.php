@@ -27,6 +27,8 @@ class UpdatePostsTableIncludeSlugAndLinks extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('slug');
+        });
     }
 }

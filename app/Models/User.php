@@ -57,4 +57,23 @@ class User extends Authenticatable
     public function likedPosts(){
         return $this->morphedByMany(Post::class, 'likable');
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+    public function assignRole($role)
+    {
+        if(is_string($role)){
+            $role = Role::whereName($role)->firstOrFail();
+        } else {
+            return $this->roles()->sync($role, false);
+        }
+    }
+
+    public function abilities()
+    {
+        return $this->roles->map->abilities->flatten()->pluck('name')->unique();
+    }
+
 }
