@@ -4,41 +4,42 @@
     <section class="section">
         <h1 class="title">{{ __('Upload images') }}</h1>
         <hr>
+
         <form action="{{ route('admin.images.save') }}" method="post" enctype="multipart/form-data">
- 
-        @csrf 
-        <div class="field">
-            <label class="label">Upload Image</label>
-            <div class="control">
-                <input class="input" name="uploadFile" type="file">
+            @csrf 
+            <div class="field">
+                <label class="label">Upload Image</label>
+                <div class="control">
+                    <input class="input" name="files[]" type="file" value="{{ old('file') }}" multiple>
+                </div>
+                @error('uploadFile')<p class="help is-danger">{{ $message }}</p>@enderror
             </div>
-            @error('uploadFile')<p class="help is-danger">{{ $message }}</p>@enderror
-        </div>
 
-        <div class="field">
-            <label class="label">Save A Custom File Name</label>
-            <div class="control">
-            <!--   -->
-                <input name="file_name_option" type="checkbox" value="1" {{ old('file_name_option') ? 'checked' : null }}>
+            <div class="field">
+                <label class="label">Save A Custom File Name</label>
+                <div class="control">
+                <!--   -->
+                    <input name="file_name_option" type="checkbox" value="1" {{ old('file_name_option') ? 'checked' : null }}>
+                </div>
+                @error('file_name_option')<p class="help is-danger">{{ $message }}</p>@enderror
             </div>
-            @error('file_name_option')<p class="help is-danger">{{ $message }}</p>@enderror
-        </div>
 
-        <div class="field">
-            <label class="label">File Name</label>
-            <div class="control">
-                <input class="input" name="file_name" type="text" value="{{ old('file_name') ?? null }}">
+            <div class="field">
+                <label class="label">File Name</label>
+                <div class="control">
+                    <input class="input" name="file_name" type="text" value="{{ old('file_name') ?? null }}">
+                </div>
+                @error('file_name')<p class="help is-danger">{{ $message }}</p>@enderror
             </div>
-            @error('file_name')<p class="help is-danger">{{ $message }}</p>@enderror
-        </div>
 
-        <div class="field is-grouped">
-            <div class="control">
-                <button type="submit" class="button is-link">Submit</button>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-link">Submit</button>
+                </div>
+                <div class="control">
+                    <a href="{{ route('admin.dash') }}" class="button is-link is-light">Cancel</a>
+                </div>
             </div>
-            <div class="control">
-                <a href="{{ route('admin.dash') }}" class="button is-link is-light">Cancel</a>
-            </div>
-        </div>
+        </form>
     </section>
 @endsection

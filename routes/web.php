@@ -25,9 +25,9 @@ Route::get('tag/{tagName}/{postSlug}', [TagController::class, 'tagsPostShow'])->
 Auth::routes();
 
 Route::group([
-    'prefix' => 'admin',
-    'as' => 'admin.',
-    'middleware' => 'auth',
+        'prefix' => 'admin',
+        'as' => 'admin.',
+        'middleware' => 'can:access_admin',
     ], 
     function(){
         Route::get('/dash', [App\Http\Controllers\Admin\DashController::class, 'index'])->name('dash');

@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::before( function($user, $ability){
             //user is authenticate at this stage
-            //check the users ability and return a result of true or false
+            //check the users ability and return a result of true or false            
             if ($user->abilities()->contains($ability)) {
                 return true;
             }

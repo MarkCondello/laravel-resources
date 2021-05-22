@@ -19,9 +19,16 @@ class ImageController extends Controller
 
     public function store(ImagesRequest $request)
     {
- 
-         // Hard coded the File uploadable to a Post
-        FileService::save($request, null, "App\Models\Post", 1);
+        $paths = [];
+        $files = $request->file('files');
+
+        foreach($files as $file):
+            $fileName = 'profile-'.time().'.'.$file->getClientOriginalExtension();
+            $paths[] = $file->storeAs('profiles', $fileName);
+        endforeach;
+        //dd($paths);
+        // Hard coded the File uploadable type to Post
+       // FileService::save($request, null, "App\Models\Post", 1);
         return redirect()->back();
      }
 

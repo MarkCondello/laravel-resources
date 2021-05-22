@@ -65,8 +65,6 @@ class FileService
         if ($file === null) {
             $file = new File();
         }
-        // dd("service". $request);
-
         $fileUpload = $request->file('uploadFile');
 
         $file->original_name = $fileUpload->getClientOriginalName();
@@ -77,11 +75,8 @@ class FileService
 
         $file->uploadable_type  = $uploadable_type;
         $file->uploadable_id    = $uploadable_id;
-
         //Store image in database
         $file->save();
-        //dd("service". $file);
-
         //Store image locally 
         $fileUpload->storeAs('', $fileUpload->getClientOriginalName());
         return $file;

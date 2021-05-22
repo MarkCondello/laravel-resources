@@ -44,9 +44,12 @@
 
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-start">
+
+                 @can('access_admin')
                     <a class="navbar-item" href="{{ route('admin.post.index') }}">Posts</a>
                     <a class="navbar-item" href="{{ route('admin.tag.index') }}">Tags</a>
-
+                @endcan
+ 
                     <!-- <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">
                             More

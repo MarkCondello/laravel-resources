@@ -25,7 +25,8 @@ class ImagesRequest extends FormRequest
     {
            //dd(request()->input('file_name_option'));
         return [
-            'uploadFile' => 'required',
+            //'upload_file' => 'required',
+            'files.*' => 'required|mimes:jpg,png,jpeg',
             'file_name' => 'required_if:file_name_option,1',
             //'file_name_option' => 'required_if:file_name,' ,
 
