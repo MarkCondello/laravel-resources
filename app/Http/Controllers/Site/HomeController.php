@@ -14,6 +14,9 @@ class HomeController extends Controller
     // should this be an invoke instead??
     public function home()
     {
+
+        // $u1= User::find(1);
+        // dd("GGF!", $u1);
         $tags = Tag::all();
         return view('site.home')->with(compact('tags'));
     }

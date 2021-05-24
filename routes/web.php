@@ -27,7 +27,8 @@ Auth::routes();
 Route::group([
         'prefix' => 'admin',
         'as' => 'admin.',
-        'middleware' => 'can:access_admin',
+        'middleware' => ['can:access_admin', 'auth'],
+        //'middleware' => 'can:access_admin',
     ], 
     function(){
         Route::get('/dash', [App\Http\Controllers\Admin\DashController::class, 'index'])->name('dash');

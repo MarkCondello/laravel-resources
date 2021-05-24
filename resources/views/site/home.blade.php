@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="grid grid-cols-1 md:grid-cols-2"> 
+@isset($tags)
 @foreach($tags as $key=>$tag)
     @if(count($tag->posts)  )
         <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
@@ -21,6 +22,7 @@
         </div>
     @endif
 @endforeach
+@endisset
     <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
         <div class="flex items-center">
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

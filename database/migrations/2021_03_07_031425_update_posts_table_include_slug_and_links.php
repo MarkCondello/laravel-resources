@@ -16,7 +16,7 @@ class UpdatePostsTableIncludeSlugAndLinks extends Migration
         Schema::table('posts', function (Blueprint $table) {
             $table->string('slug')->after('title');
             $table->text('links')->nullable()->after('body');
-            $table->foreign('user_id')->references('users')->on('id');
+           // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

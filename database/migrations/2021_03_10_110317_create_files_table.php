@@ -19,12 +19,10 @@ class CreateFilesTable extends Migration
             $table->string('hash_name');
             $table->double('size');
             $table->string('file_type')->nullable();
-
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
+ 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedInteger('post_id');
-            $table->foreign('post_id')->references('id')->on('posts');
-
+ 
             $table->softDeletes();
             $table->timestamps();
         });

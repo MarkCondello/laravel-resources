@@ -4,10 +4,6 @@
     <section class="section">
         <h1 class="title">{{ __('Image ' ) . $image->original_name }}</h1>
         <hr>
-
-         @php $postFiles = App\Models\Post::find(67)->files; @endphp
-
-        <img src="{{ asset('images/' . $image->original_name) }}" alt="{{$image->original_name}}"/>
+        <img src="{{ 'https://laravel-resource.s3-ap-southeast-2.amazonaws.com/profiles/profile-' . $image->original_name }}" alt="{{$image->original_name}}" />
     </section>
-
 @endsection

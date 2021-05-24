@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\File;
 use App\Services\File\FileService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests\Admin\ImagesRequest;
 
@@ -23,18 +24,24 @@ class ImageController extends Controller
         $files = $request->file('files');
 
         foreach($files as $file):
-            $fileName = 'profile-'.time().'.'.$file->getClientOriginalExtension();
-            $paths[] = $file->storeAs('profiles', $fileName);
+            $item = new File();
+            $item->original_name = $file->getClientOriginalName();
+            $item->hash_name     = $file->hashName();
+            $item->size          = $file->getSize();
+            $item->file_type     = $file->getClientOriginalExtension();
+            $item->user_id       = auth()->id();
+            //Store image in database
+            $item->save();
+
+            $fileName = 'profile-' . $item->original_name;
+            $paths[] = $file->storeAs('profiles', $fileName, 's3');
         endforeach;
-        //dd($paths);
-        // Hard coded the File uploadable type to Post
-       // FileService::save($request, null, "App\Models\Post", 1);
         return redirect()->back();
      }
 
     public function show(File $image)
     {
+
         return view('admin.images.show')->with(compact('image'));
-      
     }
 }

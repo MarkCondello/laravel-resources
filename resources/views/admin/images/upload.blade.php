@@ -4,7 +4,7 @@
     <section class="section">
         <h1 class="title">{{ __('Upload images') }}</h1>
         <hr>
-
+  
         <form action="{{ route('admin.images.save') }}" method="post" enctype="multipart/form-data">
             @csrf 
             <div class="field">

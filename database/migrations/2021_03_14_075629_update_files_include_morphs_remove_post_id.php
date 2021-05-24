@@ -15,8 +15,7 @@ class UpdateFilesIncludeMorphsRemovePostId extends Migration
     {
         Schema::table('files', function (Blueprint $table) {
             $table->morphs('uploadable');
-            $table->dropColumn('post_id');
-        });
+         });
     }
 
     /**
@@ -28,8 +27,6 @@ class UpdateFilesIncludeMorphsRemovePostId extends Migration
     {
         Schema::table('files', function (Blueprint $table) {
             $table->dropColumn('uploadable');
-            $table->unsignedInteger('post_id');
-            $table->foreign('post_id')->references('id')->on('posts');
-        });
+         });
     }
 }
