@@ -2264,22 +2264,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LightBoxTrigger)
 /* harmony export */ });
+/* harmony import */ var _LightBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LightBox */ "./resources/js/includes/LightBox.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+
+
 var LightBoxTrigger = /*#__PURE__*/function () {
-  function LightBoxTrigger($trigger, lightBox) {
+  function LightBoxTrigger($trigger) {
     var _this = this;
 
-    var src = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "src";
-    var index = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+    var src = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "src";
+    var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
     _classCallCheck(this, LightBoxTrigger);
 
-    this.lightBox = lightBox;
+    (0,_LightBox__WEBPACK_IMPORTED_MODULE_0__.addLightBoxTemplate)('lbox-js-template');
+    this.lightboxTemplate = document.querySelector('[data-lbox-js-template]');
+    this.lightBox = new _LightBox__WEBPACK_IMPORTED_MODULE_0__.LightBox(this.lightboxTemplate);
     this.$trigger = $trigger;
     this.imagesClass = this.$trigger.data('images-class');
     this.images = [];
@@ -2428,6 +2433,7 @@ var LightBoxTrigger = /*#__PURE__*/function () {
       this.lightBox.captionArea.innerText = '';
       this.lightBox.expandCompressBtn.style.display = null;
       this.imgSrcAttribute = "src";
+      this.lightboxTemplate.remove();
     }
   }]);
 
@@ -50234,24 +50240,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _includes_Editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./includes/Editor */ "./resources/js/includes/Editor.js");
-/* harmony import */ var _includes_LightBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./includes/LightBox */ "./resources/js/includes/LightBox.js");
-/* harmony import */ var _includes_LightBoxTrigger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./includes/LightBoxTrigger */ "./resources/js/includes/LightBoxTrigger.js");
-/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
-/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_4__);
-
+/* harmony import */ var _includes_LightBoxTrigger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./includes/LightBoxTrigger */ "./resources/js/includes/LightBoxTrigger.js");
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function ($) {
-  (0,_includes_LightBox__WEBPACK_IMPORTED_MODULE_2__.addLightBoxTemplate)('lbox-editor-js');
-  var lightboxEditorJs = document.querySelector('[data-lbox-editor-js]'),
-      lightBoxForEditor = new _includes_LightBox__WEBPACK_IMPORTED_MODULE_2__.LightBox(lightboxEditorJs);
   $('.image-tool__image').each(function (id, el) {
     $(el).data('images-class', "image-tool__image-picture");
     $(el).data('caption-class', "image-tool__caption");
     $(el).on('click', function (ev) {
       ev.preventDefault();
-      var lbox = new _includes_LightBoxTrigger__WEBPACK_IMPORTED_MODULE_3__.default($(el), lightBoxForEditor, "src", id); // console.log({lbox})
+      var lboxTrigger = new _includes_LightBoxTrigger__WEBPACK_IMPORTED_MODULE_2__.default($(el), "src", id); // console.log({lbox})
     });
   });
 });
@@ -50265,7 +50266,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
 
-Vue.use((vue_cookies__WEBPACK_IMPORTED_MODULE_4___default()));
+Vue.use((vue_cookies__WEBPACK_IMPORTED_MODULE_3___default()));
 Vue.$cookies.config(0, '/');
 
 if (Vue.$cookies.get("isOpened") === null) {

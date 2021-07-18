@@ -1,7 +1,11 @@
+import {addLightBoxTemplate, LightBox} from './LightBox';
 
 export default class LightBoxTrigger{
-    constructor($trigger, lightBox, src = "src", index = 0){
-        this.lightBox = lightBox;
+    constructor($trigger,  src = "src", index = 0){
+        addLightBoxTemplate('lbox-js-template');
+
+        this.lightboxTemplate = document.querySelector('[data-lbox-js-template]');
+        this.lightBox = new LightBox(this.lightboxTemplate);
         this.$trigger = $trigger;
         this.imagesClass = this.$trigger.data('images-class');
         this.images = [];
@@ -117,5 +121,6 @@ export default class LightBoxTrigger{
         this.lightBox.captionArea.innerText = '';
         this.lightBox.expandCompressBtn.style.display = null;
         this.imgSrcAttribute = "src";
+        this.lightboxTemplate.remove();
     }
 }
