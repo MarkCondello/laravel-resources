@@ -1,6 +1,75 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
 @charset "UTF-8";
 
+.lightbox {
+  background-color: rgba(0, 0, 0, 0.45);
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  overflow-y: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1005;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox.show {
+  display: flex;
+}
+
+.lightbox > button {
+  position: absolute;
+  top: 1rem;
+}
+
+.lightbox > button:first-of-type {
+  right: 2.5rem;
+}
+
+.lightbox > button:last-of-type {
+  right: 1rem;
+}
+
+.lightbox button {
+  cursor: pointer;
+  color: white;
+}
+
+.lightbox > figure {
+  height: 50%;
+  max-width: none;
+  width: 30%;
+  background: white;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 15px solid white;
+  transition: all 1s;
+}
+
+.lightbox > figure figcaption {
+  position: absolute;
+  bottom: 10px;
+  left: 16px;
+  color: white;
+}
+
+.lightbox > nav {
+  display: flex;
+  padding: 0 2rem;
+  position: absolute;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.lightbox > nav > button {
+  font-size: 1.5rem;
+}
+
 /*!
  * Font Awesome Free 5.15.3 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)

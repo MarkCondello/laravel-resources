@@ -24,6 +24,37 @@ Route::get('tag/{tagName}/{postSlug}', [TagController::class, 'tagsPostShow'])->
  
 Auth::routes();
 
+
+Route::get('/lightbox', function(){
+    return view('site.lightbox');
+});
+
+// Service Container example
+Route::get('/container', function(){
+    $container = new \App\Container();
+    $container->bind('example', function(){
+        return new \App\Example();
+    });
+    $example = $container->resolve('example');
+    ddd($example->go());
+});
+
+// app()->bind('example', function(){
+//     $foo = config('services.foo.key');
+//     return new \App\Example($foo);
+// });
+
+Route::get('/laravels-container', function(){
+//Route::get('/laravels-container', function(App\Example $example){
+
+    //$example = app()->make(App\Example::class);
+    //$example = resolve(App\Example::class);
+    $example = resolve('App\Example');
+    // ddd($example->collaborator->FunctionName());
+    ddd($example->foo, $example->foo); // the same singleton object
+
+});
+
 Route::group([
         'prefix' => 'admin',
         'as' => 'admin.',

@@ -2210,6 +2210,234 @@ if (editorJs) {
 
 /***/ }),
 
+/***/ "./resources/js/includes/LightBox.js":
+/*!*******************************************!*\
+  !*** ./resources/js/includes/LightBox.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "LightBox": () => (/* binding */ LightBox),
+/* harmony export */   "addLightBoxTemplate": () => (/* binding */ addLightBoxTemplate)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LightBox = function LightBox(el) {
+  _classCallCheck(this, LightBox);
+
+  this.container = el;
+  this.topBtns = this.container.querySelectorAll('button');
+  this.expandCompressBtn = this.topBtns[0];
+  this.expandCompressBtnIcon = this.expandCompressBtn.querySelector('i');
+  this.expandIcon = this.expandCompressBtnIcon.classList.value;
+  this.contractIcon = "fal fa-compress-alt";
+  this.closeBtn = this.topBtns[1];
+  this.previewArea = this.container.querySelector('figure');
+  this.captionArea = this.previewArea.querySelector('figcaption');
+  this.nav = this.container.querySelector('nav');
+  this.prevNextBtns = this.nav.querySelectorAll('button');
+  this.prevBtn = this.prevNextBtns[0];
+  this.nextBtn = this.prevNextBtns[1];
+};
+
+var addLightBoxTemplate = function addLightBoxTemplate(dataId) {
+  var body = document.querySelector('body'),
+      template = "<div data-".concat(dataId, " class=\"lightbox\">\n    <button><i class=\"fas fa-expand-alt\"></i></button>\n    <button><i class=\"fas fa-times\"></i></button> \n    <figure>\n        <figcaption></figcaption>\n    </figure>\n    <nav>\n        <button>\n            <i class=\"fas fa-chevron-left\"></i>\n        </button>     \n        <button>\n            <i class=\"fas fa-chevron-right\"></i>\n        </button>\n    </nav>\n    </div>");
+  body.insertAdjacentHTML("beforeend", template);
+  return;
+};
+
+
+
+/***/ }),
+
+/***/ "./resources/js/includes/LightBoxTrigger.js":
+/*!**************************************************!*\
+  !*** ./resources/js/includes/LightBoxTrigger.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LightBoxTrigger)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var LightBoxTrigger = /*#__PURE__*/function () {
+  function LightBoxTrigger($trigger, lightBox) {
+    var _this = this;
+
+    var src = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "src";
+    var index = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+
+    _classCallCheck(this, LightBoxTrigger);
+
+    this.lightBox = lightBox;
+    this.$trigger = $trigger;
+    this.imagesClass = this.$trigger.data('images-class');
+    this.images = [];
+    this.captionsClass = this.$trigger.data('caption-class');
+    this.captions = [];
+    this.imgSrcAttribute = src; // the image src item may be an anchor which would require a href attribute
+
+    this.currentIndex = index;
+    this.expandPreviewArea = false;
+    this.lightBox.expandCompressBtn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+
+      _this.handleExpandContractClick();
+    });
+    this.lightBox.closeBtn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+
+      _this.close();
+    });
+    this.lightBox.nextBtn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+
+      _this.handleNextClick();
+    });
+    this.lightBox.prevBtn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+
+      _this.handlePrevClick();
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === "Escape") {
+        _this.close();
+      }
+    });
+
+    if (this.imgSrcAttribute === 'href') {
+      this.lightBox.expandCompressBtn.style.display = 'none';
+      this.lightBox.previewArea.addEventListener('click', function (ev) {
+        window.open(_this.images[_this.currentIndex].href, '_blank');
+      });
+    }
+
+    this.display();
+  }
+
+  _createClass(LightBoxTrigger, [{
+    key: "handleExpandContractClick",
+    value: function handleExpandContractClick() {
+      this.lightBox.expandCompressBtnIcon.className = '';
+
+      if (!this.expandPreviewArea) {
+        this.lightBox.expandCompressBtnIcon.className = this.lightBox.contractIcon;
+        this.expandPreviewArea = true;
+        this.updateSlide();
+        return;
+      }
+
+      this.lightBox.expandCompressBtnIcon.className = this.lightBox.expandIcon;
+      this.expandPreviewArea = false;
+      this.updateSlide();
+    }
+  }, {
+    key: "handlePrevClick",
+    value: function handlePrevClick() {
+      if (this.currentIndex === 0) {
+        this.currentIndex = this.images.length - 1;
+      } else {
+        this.currentIndex--;
+      }
+
+      this.updateSlide();
+    }
+  }, {
+    key: "handleNextClick",
+    value: function handleNextClick() {
+      if (this.currentIndex === this.images.length - 1) {
+        this.currentIndex = 0;
+      } else {
+        this.currentIndex++;
+      }
+
+      this.updateSlide();
+    }
+  }, {
+    key: "display",
+    value: function display() {
+      this.images = Array.from(document.querySelectorAll(".".concat(this.imagesClass)));
+
+      if (this.captionsClass != null) {
+        this.captions = Array.from(document.querySelectorAll(".".concat(this.captionsClass)));
+      }
+
+      this.lightBox.container.classList.add('show');
+      this.updateSlide();
+    }
+  }, {
+    key: "updateSlide",
+    value: function updateSlide() {
+      // console.log({currentIndex: this.currentIndex, captionEl: this.captions[this.currentIndex], captionText: this.captions[this.currentIndex].innerText}, )
+      var imgSrc = null;
+
+      if (this.captions.length && this.captions[this.currentIndex].innerText !== undefined) {
+        this.lightBox.captionArea.innerText = this.captions[this.currentIndex].innerText;
+      } else {
+        if (this.images[this.currentIndex].alt && this.captions.length === 0) {
+          this.lightBox.captionArea.innerText = this.images[this.currentIndex].alt;
+        } else {
+          this.lightBox.captionArea.innerText = 'No caption included.';
+        }
+      }
+
+      if (this.imgSrcAttribute === 'src') {
+        imgSrc = this.images[this.currentIndex].src;
+      } else if (this.imgSrcAttribute === 'href') {
+        imgSrc = this.images[this.currentIndex].href;
+      }
+
+      this.lightBox.previewArea.style.backgroundImage = "url(".concat(imgSrc, ")");
+
+      if (this.expandPreviewArea) {
+        var imgWidth = this.images[this.currentIndex].naturalWidth,
+            imgHeight = this.images[this.currentIndex].naturalHeight;
+
+        if (this.lightBox.previewArea.offsetHeight < imgHeight && this.lightBox.previewArea.offsetWidth < imgWidth) {
+          this.lightBox.previewArea.style.width = imgWidth + "px";
+          this.lightBox.previewArea.style.height = imgHeight + "px";
+          return;
+        }
+
+        this.expandPreviewArea = false;
+        this.lightBox.expandCompressBtnIcon.className = this.lightBox.expandIcon; // if the image is smaller than the preview window, set the expanded option to false
+
+        alert("This image is too small for fullscreen view.");
+      }
+
+      this.lightBox.previewArea.style.width = null;
+      this.lightBox.previewArea.style.height = null;
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      this.lightBox.container.classList.remove('show');
+      this.currentIndex = 0;
+      this.expandPreviewArea = false;
+      this.images = [];
+      this.lightBox.captionArea.innerText = '';
+      this.lightBox.expandCompressBtn.style.display = null;
+      this.imgSrcAttribute = "src";
+    }
+  }]);
+
+  return LightBoxTrigger;
+}();
+
+
+
+/***/ }),
+
 /***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
 /*!*****************************************************!*\
   !*** ./node_modules/bootstrap/dist/js/bootstrap.js ***!
@@ -50003,10 +50231,30 @@ var __webpack_exports__ = {};
   !*** ./resources/js/site.js ***!
   \******************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _includes_Editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./includes/Editor */ "./resources/js/includes/Editor.js");
-/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
-/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _includes_Editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./includes/Editor */ "./resources/js/includes/Editor.js");
+/* harmony import */ var _includes_LightBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./includes/LightBox */ "./resources/js/includes/LightBox.js");
+/* harmony import */ var _includes_LightBoxTrigger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./includes/LightBoxTrigger */ "./resources/js/includes/LightBoxTrigger.js");
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_4__);
 
+
+
+
+jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function ($) {
+  (0,_includes_LightBox__WEBPACK_IMPORTED_MODULE_2__.addLightBoxTemplate)('lbox-editor-js');
+  var lightboxEditorJs = document.querySelector('[data-lbox-editor-js]'),
+      lightBoxForEditor = new _includes_LightBox__WEBPACK_IMPORTED_MODULE_2__.LightBox(lightboxEditorJs);
+  $('.image-tool__image').each(function (id, el) {
+    $(el).data('images-class', "image-tool__image-picture");
+    $(el).data('caption-class', "image-tool__caption");
+    $(el).on('click', function (ev) {
+      ev.preventDefault();
+      var lbox = new _includes_LightBoxTrigger__WEBPACK_IMPORTED_MODULE_3__.default($(el), lightBoxForEditor, "src", id); // console.log({lbox})
+    });
+  });
+});
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -50017,7 +50265,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
 
-Vue.use((vue_cookies__WEBPACK_IMPORTED_MODULE_1___default()));
+Vue.use((vue_cookies__WEBPACK_IMPORTED_MODULE_4___default()));
 Vue.$cookies.config(0, '/');
 
 if (Vue.$cookies.get("isOpened") === null) {

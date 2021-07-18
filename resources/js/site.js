@@ -1,4 +1,26 @@
+import jQuery from "jquery";  
 import "./includes/Editor";
+import {addLightBoxTemplate, LightBox} from './includes/LightBox';
+import LightBoxTrigger from './includes/LightBoxTrigger';
+
+jQuery(document).ready(function($){
+
+    addLightBoxTemplate('lbox-editor-js');
+    let lightboxEditorJs = document.querySelector('[data-lbox-editor-js]'),
+    lightBoxForEditor = new LightBox(lightboxEditorJs);
+
+    $('.image-tool__image').each((id, el)=>{
+        $(el).data('images-class', "image-tool__image-picture");
+        $(el).data('caption-class', "image-tool__caption");
+
+        $(el).on('click', (ev)=>{
+            ev.preventDefault();
+            let lbox = new LightBoxTrigger($(el), lightBoxForEditor, "src", id);
+            // console.log({lbox})
+        })
+
+    });
+});
 
 
 /**
