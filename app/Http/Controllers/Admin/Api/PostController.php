@@ -12,7 +12,6 @@ class PostController extends Controller
     
     public function list()
     {
-
         return PostResource::collection(
             Post::all()
         );

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 // ToDo: Add the COntrollers paths here
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\TagController;
+use App\Http\Controllers\PayOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::get('tag/{tagName}/{postSlug}', [TagController::class, 'tagsPostShow'])->
  
 Auth::routes();
 
+Route::get('pay', [PayOrderController::class, 'store']);
 
 Route::get('/lightbox', function(){
     return view('site.lightbox');

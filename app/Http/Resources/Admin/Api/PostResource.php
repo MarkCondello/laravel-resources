@@ -17,7 +17,6 @@ class PostResource extends JsonResource
     {
         //return parent::toArray($request);
         $resource = [];
-
         $resource['id'] = $this->id;
         $resource['title'] = $this->title;
         $resource['author'] = $this->user->name;
@@ -37,7 +36,6 @@ class PostResource extends JsonResource
                 'url' => route('admin.post.destroy', $this->id),  
             ],
         ];
-
         return $resource;
     }
 }

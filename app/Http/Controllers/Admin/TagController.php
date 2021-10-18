@@ -37,14 +37,13 @@ class TagController extends Controller
     public function edit(TagRequest $request, Tag $tag)
     {
         $tag->update( $request->except('uploadFile') );
-  
         if($request->file('uploadFile')){
             // Delete the previous image if it exists
-            $storedFile = $tag->image->first()->delete();
-
+            if($tag->image->first()){
+                $storedFile = $tag->image->first()->delete();
+            }
             FileService::save($request, null, "App\Models\Tag", $tag->id);
         }
-
         return redirect(route('admin.tag.index'))
             ->with('FlashMessage', "Tag {$tag->name} was succesfully updated.");
     }

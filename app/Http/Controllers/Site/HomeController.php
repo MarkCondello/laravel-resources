@@ -15,7 +15,7 @@ class HomeController extends Controller
     // should this be an invoke instead??
     public function home()
     {
-        // return Request()->input('name');
+        //return Request()->input('name');
         $tags = Tag::all();
         return View::make('site.home')->with(compact('tags'));
     }

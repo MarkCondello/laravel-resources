@@ -23,7 +23,7 @@
         <!-- ToDo: Could this be better if the user can choose a font awesome icon instead??? -->
         <div class="field">
             <label class="label">Upload Image</label>
-            @if(isset($tag) && $tag-image()->exists())
+            @if(isset($tag) && $tag->image()->exists())
             <img width="200" src="{{ asset('images/' . $tag->image->first()->original_name) }}" alt="{{ $tag->image->first()->original_name }}"/>
             @endif
             <div class="control">
