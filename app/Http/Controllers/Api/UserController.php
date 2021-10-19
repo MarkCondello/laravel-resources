@@ -12,7 +12,7 @@ class UserController extends Controller
     public function list()
     {
         return UserResource::collection(
-            User::paginate(3)
+            User::get()
         );
     }
 }
