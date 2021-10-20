@@ -22,4 +22,4 @@ Route::middleware('auth:api')
 
 
 Route::get('/users', [UserController::class, 'list'])->name('users.list');
-
+Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');

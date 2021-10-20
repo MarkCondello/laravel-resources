@@ -15,4 +15,11 @@ class UserController extends Controller
             User::get()
         );
     }
+
+    public function show($id)
+    {
+        return new UserResource(
+            User::find($id)
+        );
+    }
 }

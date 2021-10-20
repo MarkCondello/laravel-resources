@@ -7,6 +7,7 @@ use App\Billing\CreditPaymentGateway;
 use App\Billing\PaymentGatewayContract;
 use Illuminate\Support\ServiceProvider;
 use App\Example;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,5 +40,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        // JsonResource::withoutWrapping();
+
     }
 }
