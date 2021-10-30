@@ -17,6 +17,8 @@ use App\Http\Controllers\PayOrderController;
 |
 */
 
+Route::view('/testing-vue', 'site/vue-index');
+
 // Should have a site group
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
