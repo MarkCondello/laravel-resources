@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import Counter from '@/Counter.vue'
+import Counter from '../../resources/js/components/Counter.vue'
 
 describe('Counter.vue', () => {
     test('increments counter val on click', async () => {
