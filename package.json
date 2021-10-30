@@ -21,6 +21,8 @@
         "bootstrap": "^4.0.0",
         "bulma": "^0.9.2",
         "jquery": "^3.2",
+        "jsdom": "^16.7.0",
+        "jsdom-global": "^3.0.2",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "popper.js": "^1.12",
@@ -28,13 +30,17 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
-        "vue": "^2.5.17",
+        "vue": "^2.6.14",
         "vue-loader": "^15.9.6",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
         "@editorjs/paragraph": "^2.8.0",
         "@fortawesome/fontawesome-free": "^5.15.3",
-        "vue-cookies": "^1.7.4"
+        "@vue/test-utils": "^1.2.2",
+        "babel-core": "^7.0.0-bridge.0",
+        "jest": "^27.3.1",
+        "vue-cookies": "^1.7.4",
+        "vue-jest": "^3.0.7"
     }
 }
