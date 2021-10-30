@@ -6,4 +6,6 @@
 
 // npm i jsdom jsdom-global --save-dev
 
+//To get async await working in babel follow solution 3 here: https://exerror.com/babel-referenceerror-regeneratorruntime-is-not-defined/
+
 require('jsdom-global')()
