@@ -5,15 +5,18 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
+    <message-display />
     <router-view />
   </div>
 </template>
 
 <script>
-import AppHeader from './components/AppHeader.vue'
+import AppHeader from './components/AppHeader.vue';
+import MessageDisplay from './components/MessageDisplay.vue';
 export default {
   components: {
-    AppHeader
+    AppHeader,
+    MessageDisplay,
   }
 }
 </script>
