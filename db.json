@@ -1,3 +1,4 @@
 {
-    "message": { "text": "Hello from the db!" }
+    "message": { "text": "Hello from the db!" },
+    "data": { "text": "value" }
 }

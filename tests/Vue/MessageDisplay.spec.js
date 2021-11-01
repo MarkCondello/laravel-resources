@@ -1,8 +1,8 @@
 import MessageDisplay from '../../resources/js/components/MessageDisplay.vue';
 import { mount } from '@vue/test-utils';
- import { getMessage } from '../../resources/js/services/axios.js';
- import flushPromises from 'flush-promises';
- import axios from 'axios'
+import { getMessage } from '../../resources/js/services/axios.js';
+import flushPromises from 'flush-promises';
+// import axios from 'axios'
 
 //  Cant do this below
 //  let getMessage = () => {

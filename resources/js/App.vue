@@ -5,6 +5,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
+    <button-request />
     <message-display />
     <router-view />
   </div>
@@ -13,10 +14,12 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
 import MessageDisplay from './components/MessageDisplay.vue';
+import ButtonRequest from './components/ButtonRequest.vue';
 export default {
   components: {
     AppHeader,
     MessageDisplay,
+    ButtonRequest,
   }
 }
 </script>
