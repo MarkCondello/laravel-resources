@@ -9,13 +9,13 @@ export let getMessage = () => {
   })
 }
 
- export let mockData = () => Promise.resolve({ data: 'value' })
-// export let mockData = () => {
-//   return axios.get('http://127.0.0.1:3000/data')
-//     .then(response => {
-//       return response.data
-//   })
-// }
+ //export let mockData = () => Promise.resolve({ data: 'value' })
+export let mockData = () => {
+  return axios.get('http://127.0.0.1:3000/data')
+    .then(response => {
+      return response.data
+  })
+}
 
 
 // I assume a service for all api calls needs to be made so that testing can be done against the methods defined here.

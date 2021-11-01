@@ -16,9 +16,9 @@
     methods: {
       async fetchResults() {
         const response = await mockData();
-        //axios.get('mock/service')
+        //axios.get('mock/service') // in the docs but wtf?
         console.log({response})
-        this.value = response.data
+        this.value = response.text
       }
     }
   }

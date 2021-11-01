@@ -8,13 +8,13 @@ jest.mock('../../resources/js/services/axios.js');
 describe('ButtonRequest', ()=>{
     test("Fetches data once the button is clicked", async ()=>{
         let wrapper = mount(ButtonRequest);
-        mockData.mockResolvedValueOnce({ "data": 'value' });
+        mockData.mockResolvedValueOnce({ "text": 'value' });
 
         let btn = wrapper.find('button');
         btn.trigger('click');
         expect(mockData).toHaveBeenCalledTimes(1);
 
-        await flushPromises();
+        await flushPromises();//wait for requet to resolve
 
         expect(btn.text()).toBe('value');
     })

@@ -1959,11 +1959,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context.sent;
-                //axios.get('mock/service')
+                //axios.get('mock/service') // in the docs but wtf?
                 console.log({
                   response: response
                 });
-                _this.value = response.data;
+                _this.value = response.text;
 
               case 5:
               case "end":
@@ -2136,18 +2136,13 @@ var getMessage = function getMessage() {
   return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:3000/message').then(function (response) {
     return response.data;
   });
-};
+}; //export let mockData = () => Promise.resolve({ data: 'value' })
+
 var mockData = function mockData() {
-  return Promise.resolve({
-    data: 'value'
+  return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:3000/data').then(function (response) {
+    return response.data;
   });
-}; // export let mockData = () => {
-//   return axios.get('http://127.0.0.1:3000/data')
-//     .then(response => {
-//       return response.data
-//   })
-// }
-// I assume a service for all api calls needs to be made so that testing can be done against the methods defined here.
+}; // I assume a service for all api calls needs to be made so that testing can be done against the methods defined here.
 
 /***/ }),
 
