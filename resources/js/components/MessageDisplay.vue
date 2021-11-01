@@ -1,10 +1,13 @@
 <template>
+<div>
+  <h1>Msg display</h1>
   <p v-if="error" data-testid="message-error">{{ error }}</p>
   <p v-else data-testid="message">{{ message.text }}</p>
+</div>
 </template>
 
 <script>
-import { getMessage } from '../services/axios.js'
+ import { getMessage } from '../services/axios.js'
 
 export default {
   data() {
@@ -13,13 +16,16 @@ export default {
       error: null
     }
   },
-
   async created() {
     try {
-      this.message = await getMessage()
+      let res = await getMessage();
+      console.log("From created lc", {res});
+      this.message = res;
     } catch (err) {
       this.error = 'Oops! Something went wrong.'
     }
-  }
+  },
+
+
 }
 </script>

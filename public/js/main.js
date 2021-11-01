@@ -1933,6 +1933,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -1950,27 +1953,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              _context.next = 3;
+              console.log("reached created lc");
+              _context.next = 4;
               return (0,_services_axios_js__WEBPACK_IMPORTED_MODULE_1__.getMessage)();
 
-            case 3:
+            case 4:
               _this.message = _context.sent;
-              _context.next = 9;
+              _context.next = 10;
               break;
 
-            case 6:
-              _context.prev = 6;
+            case 7:
+              _context.prev = 7;
               _context.t0 = _context["catch"](0);
               _this.error = 'Oops! Something went wrong.';
 
-            case 9:
+            case 10:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 6]]);
+      }, _callee, null, [[0, 7]]);
     }))();
-  }
+  } // methods: {
+  //   getMessage() {
+  //     return axios.get('http://127.0.0.1:3000/message')
+  //       .then(response => {
+  //         return response.data
+  //     })
+  //   }
+  // },
+
 });
 
 /***/ }),
@@ -3921,13 +3933,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.error
-    ? _c("p", { attrs: { "data-testid": "message-error" } }, [
-        _vm._v(_vm._s(_vm.error))
-      ])
-    : _c("p", { attrs: { "data-testid": "message" } }, [
-        _vm._v(_vm._s(_vm.message.text))
-      ])
+  return _c("div", [
+    _c("h1", [_vm._v("Msg display")]),
+    _vm._v(" "),
+    _vm.error
+      ? _c("p", { attrs: { "data-testid": "message-error" } }, [
+          _vm._v(_vm._s(_vm.error))
+        ])
+      : _c("p", { attrs: { "data-testid": "message" } }, [
+          _vm._v(_vm._s(_vm.message.text))
+        ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
