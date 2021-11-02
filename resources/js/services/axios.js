@@ -19,3 +19,6 @@ export let mockData = () => {
 
 
 // I assume a service for all api calls needs to be made so that testing can be done against the methods defined here.
+
+// When mounting the component, there is an object option which takes methods which can be stubbed out too. Worth investigating
+// { methods: { getData: () => {}} }

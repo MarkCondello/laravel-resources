@@ -14,7 +14,7 @@ describe('ButtonRequest', ()=>{
         btn.trigger('click');
         expect(mockData).toHaveBeenCalledTimes(1);
 
-        await flushPromises();//wait for requet to resolve
+        await flushPromises();//wait for request to resolve
 
         expect(btn.text()).toBe('value');
     })

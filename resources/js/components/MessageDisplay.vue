@@ -1,6 +1,5 @@
 <template>
 <div>
-  <h1>Msg display</h1>
   <p v-if="error" data-testid="message-error">{{ error }}</p>
   <p v-else data-testid="message">{{ message.text }}</p>
 </div>
