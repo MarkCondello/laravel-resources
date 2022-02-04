@@ -1,6 +1,11 @@
 @extends('layouts.site')
 
 @section('content')
+<!-- @dump($tags) -->
+<div id="app">
+    <!-- <counter></counter> -->
+    <message-display></message-display>
+</div>
 <div class="grid grid-cols-1 md:grid-cols-2"> 
 @isset($tags)
 @foreach($tags as $key=>$tag)

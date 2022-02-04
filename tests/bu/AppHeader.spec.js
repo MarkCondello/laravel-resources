@@ -13,6 +13,6 @@ describe('AppHeader.vue', () => {
         const wrapper = mount(AppHeader);
          wrapper.setData({ loggedIn: true });
          await wrapper.vm.$nextTick();
-        expect(wrapper.find('button').isVisible()).toBe(true);    
+        expect(wrapper.find('button').isVisible()).toBe(true);
     })
 });

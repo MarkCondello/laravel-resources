@@ -6,7 +6,8 @@
 </template>
 
 <script>
- import { getMessage } from '../services/axios.js'
+// import { getMessage } from '../services/axios.js'
+import axios from 'axios'
 
 export default {
   data() {
@@ -17,8 +18,11 @@ export default {
   },
   async created() {
     try {
-      let res = await getMessage();
-      console.log("From created lc", {res});
+      // let res = await getMessage();
+      let res = await axios.get('http://127.0.0.1:5000/message')
+        .then(response => {
+          return response.data
+        })
       this.message = res;
     } catch (err) {
       this.error = 'Oops! Something went wrong.'

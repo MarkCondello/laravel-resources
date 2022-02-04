@@ -1,15 +1,10 @@
-## Laravel Sail setup
+## Running Front end tests
+A .babelrc file is required to run the tests. However including this file breaks the build process with npm.
 
-In order to connect to the db in the container make sure the port 3306 is available from the host machine
-``````
+To test mock api calls, json-server is used and should use a different port. 
+I couldn;t find a way to run this inside docker but it runs on the host machine 
 
-Check other applications running on port 3306
-```lsof -i tcp:3306 ```
-
-Laravel Sail no longer works and is not allowing connections to MySql for the root user. 
-Access denied for user 'root'@'172.31.0.5' (using password: NO)  
-
-Use php artisan:serve instead.
+```json-server --watch db.json --port 5000```
 
 ## Eloquent/Tinker details
 

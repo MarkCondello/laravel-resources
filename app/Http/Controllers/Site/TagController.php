@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Tag;
 
-
+// These are bad naming conventions
 class TagController extends Controller
 {
     public function tagsPostList($tagName)

@@ -17,7 +17,6 @@ class TagResource extends JsonResource
     {
         //return parent::toArray($request);
         $resource = [];
-
         $resource['id'] = $this->id;
         $resource['name'] = $this->name;
      
@@ -26,8 +25,7 @@ class TagResource extends JsonResource
                 'label' => "Edit",
                 // 'icon' => 'fa fa-pencil',
                 'class' => 'button is-primary is-outlined',
-                 'url' => route('admin.tag.update', $this->id),  
-                //'url' => '#',
+                'url' => route('admin.tag.update', $this->id),  
             ],  
             [
                 'type' => 'delete',

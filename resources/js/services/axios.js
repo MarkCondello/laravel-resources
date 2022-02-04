@@ -3,7 +3,7 @@ import axios from 'axios'
 
 //json-server --watch db.json
 export let getMessage = () => {
-  return axios.get('http://127.0.0.1:3000/message')
+  return axios.get('http://127.0.0.1:5000/message')
     .then(response => {
       return response.data
   })
@@ -11,7 +11,7 @@ export let getMessage = () => {
 
  //export let mockData = () => Promise.resolve({ data: 'value' })
 export let mockData = () => {
-  return axios.get('http://127.0.0.1:3000/data')
+  return axios.get('http://127.0.0.1:5000/data')
     .then(response => {
       return response.data
   })

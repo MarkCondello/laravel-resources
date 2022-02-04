@@ -1991,7 +1991,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _services_axios_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/axios.js */ "./resources/js/services/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2005,7 +2006,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
+// import { getMessage } from '../services/axios.js'
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2025,28 +2026,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return (0,_services_axios_js__WEBPACK_IMPORTED_MODULE_1__.getMessage)();
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('http://127.0.0.1:5000/messages').then(function (response) {
+                return response.data;
+              });
 
             case 3:
               res = _context.sent;
-              console.log("From created lc", {
-                res: res
-              });
               _this.message = res;
-              _context.next = 11;
+              _context.next = 10;
               break;
 
-            case 8:
-              _context.prev = 8;
+            case 7:
+              _context.prev = 7;
               _context.t0 = _context["catch"](0);
               _this.error = 'Oops! Something went wrong.';
 
-            case 11:
+            case 10:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 8]]);
+      }, _callee, null, [[0, 7]]);
     }))();
   }
 });
@@ -2133,16 +2133,18 @@ __webpack_require__.r(__webpack_exports__);
  //json-server --watch db.json
 
 var getMessage = function getMessage() {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:3000/message').then(function (response) {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:5000/message').then(function (response) {
     return response.data;
   });
 }; //export let mockData = () => Promise.resolve({ data: 'value' })
 
 var mockData = function mockData() {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:3000/data').then(function (response) {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:5000/data').then(function (response) {
     return response.data;
   });
 }; // I assume a service for all api calls needs to be made so that testing can be done against the methods defined here.
+// When mounting the component, there is an object option which takes methods which can be stubbed out too. Worth investigating
+// { methods: { getData: () => {}} }
 
 /***/ }),
 
@@ -4109,8 +4111,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", [_vm._v("Msg display")]),
-    _vm._v(" "),
     _vm.error
       ? _c("p", { attrs: { "data-testid": "message-error" } }, [
           _vm._v(_vm._s(_vm.error))
