@@ -4,7 +4,8 @@
 <!-- @dump($tags) -->
 <div id="app">
     <!-- <counter></counter> -->
-    <message-display></message-display>
+    <test-mock-api></test-mock-api>
+    <!-- <message-display></message-display> -->
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2"> 
 @isset($tags)

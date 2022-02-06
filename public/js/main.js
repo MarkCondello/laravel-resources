@@ -2026,7 +2026,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('http://127.0.0.1:5000/messages').then(function (response) {
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('http://127.0.0.1:5000/message').then(function (response) {
                 return response.data;
               });
 
@@ -2126,7 +2126,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__.default({
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "getMessage": () => (/* binding */ getMessage),
-/* harmony export */   "mockData": () => (/* binding */ mockData)
+/* harmony export */   "mockData": () => (/* binding */ mockData),
+/* harmony export */   "getValue": () => (/* binding */ getValue)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -2145,6 +2146,12 @@ var mockData = function mockData() {
 }; // I assume a service for all api calls needs to be made so that testing can be done against the methods defined here.
 // When mounting the component, there is an object option which takes methods which can be stubbed out too. Worth investigating
 // { methods: { getData: () => {}} }
+
+var getValue = function getValue() {
+  return Promise.resolve({
+    data: 'get value yo.'
+  });
+};
 
 /***/ }),
 

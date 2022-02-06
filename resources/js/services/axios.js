@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-
-//json-server --watch db.json
+//json-server --watch db.json --port 5000
 export let getMessage = () => {
   return axios.get('http://127.0.0.1:5000/message')
     .then(response => {
@@ -9,7 +8,6 @@ export let getMessage = () => {
   })
 }
 
- //export let mockData = () => Promise.resolve({ data: 'value' })
 export let mockData = () => {
   return axios.get('http://127.0.0.1:5000/data')
     .then(response => {
@@ -17,8 +15,5 @@ export let mockData = () => {
   })
 }
 
-
-// I assume a service for all api calls needs to be made so that testing can be done against the methods defined here.
-
-// When mounting the component, there is an object option which takes methods which can be stubbed out too. Worth investigating
-// { methods: { getData: () => {}} }
+// I assume a service for all api calls needs to be made so that testing can be done against the methods defined.
+export let getValue = () => Promise.resolve({ data: 'get value yo.'})

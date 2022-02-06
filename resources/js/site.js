@@ -51,6 +51,7 @@ if(Vue.$cookies.get("isOpened") === null){
 
 Vue.component('counter', require('./components/Counter.vue').default);
 Vue.component('message-display', require('./components/MessageDisplay.vue').default);
+Vue.component('test-mock-api', require('./components/TestMockApi.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

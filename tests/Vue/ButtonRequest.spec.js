@@ -5,7 +5,7 @@ import flushPromises from 'flush-promises';
 
 jest.mock('../../resources/js/services/axios.js'); 
 
-describe('ButtonRequest', ()=>{
+describe('ButtonRequest', () => {
     test("Fetches data once the button is clicked", async ()=>{
         let wrapper = mount(ButtonRequest);
         mockData.mockResolvedValueOnce({ "text": 'value' });
@@ -15,7 +15,6 @@ describe('ButtonRequest', ()=>{
         expect(mockData).toHaveBeenCalledTimes(1);
 
         await flushPromises();//wait for request to resolve
-
         expect(btn.text()).toBe('value');
     })
 });

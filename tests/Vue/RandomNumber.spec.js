@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import RandomNumber from '../../resources/js/components/RandomNumber.vue';
 
-describe('RandomNumber', ()=>{
+describe('RandomNumber', () => {
     test('If the button is not clicked the value should be 0.', ()=>{
         let wrapper = mount(RandomNumber);
         expect(wrapper.find('span').text()).toBe('0');
