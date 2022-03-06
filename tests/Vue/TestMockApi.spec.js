@@ -25,7 +25,7 @@ describe('TestMockApi', () => {
     expect(pVal).toBe('mocked value.')
   })
 
-  //set methods is deprecated
+  //set methods is deprecated, it is used to test implementation not the result
   // it('fires the fetchResults method on button click', async () => {
   //   const wrapper = mount(TestMockApi)
   //   //https://vue-test-utils.vuejs.org/api/wrapper-array/#setmethods

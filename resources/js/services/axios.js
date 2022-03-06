@@ -15,5 +15,5 @@ export let mockData = () => {
   })
 }
 
-// I assume a service for all api calls needs to be made so that testing can be done against the methods defined.
+// I assume a service for all api calls needs to be made so that jest testing can be done against the methods defined.
 export let getValue = () => Promise.resolve({ data: 'get value yo.'})
