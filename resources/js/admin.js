@@ -36,6 +36,10 @@ Vue.prototype.eventBus = new Vue();
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('search-sort-table', require('./components/SearchSortTable.vue').default);
+
+Vue.component('Ellipsis', require('./components/Ellipsis.vue').default);
+Vue.component('vue-table', require('./components/VueTable.vue').default);
+
 Vue.component('modal', require('./components/Modal.vue').default);
 Vue.component('link-repeater', require('./components/LinkRepeater.vue').default);
 

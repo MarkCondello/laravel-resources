@@ -1,5 +1,5 @@
 <template>
-    <ul v-if="actions" class=" " @mouseout="hovered = false">
+    <ul v-if="actions" @mouseout="hovered = false">
         <li class="ellipsis-menu">
             <a href="#" @mouseover="hovered = true">
                 <i class="fas fa-ellipsis-h"></i>
@@ -50,7 +50,7 @@
                             <span>{{ action.label }}</span>
                         </button>
                     </form>
-                    <a v-else 
+                    <a v-else-if="action.type === 'link'" 
                     :class="action.class"
                     :href="action.url">
                         <i :class="action.icon"></i>
@@ -66,22 +66,24 @@
     import DeleteButton from "./DeleteButton";
 
     export default {
-        name: "EllipsisMenu",
+        name: "Ellipsis",
         components: {
             "delete-button": DeleteButton
         },
         props: ["actions"],
         data() {
             return {
-                hovered: false,
+              // componentData: [],
+              foo: null,
+              hovered: false,
             }
         },
         computed: {
-            displayActions() {
-                return this.actions.filter(action => {
-                    return !action.hidden;
-                });
-            }
+          displayActions() {
+              return this.actions.filter(action => {
+                  return !action.hidden;
+              });
+          }
         },
     };
 </script>

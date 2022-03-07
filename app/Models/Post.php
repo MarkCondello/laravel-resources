@@ -6,10 +6,14 @@ use App\Http\Traits\Likables;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Presenters\PostPresenter;
+
 class Post extends Model
 {
     use HasFactory;
     use Likables;
+
+    use PostPresenter;
 
     protected $fillable = ['user_id', 'title', 'slug', 'body'];
 

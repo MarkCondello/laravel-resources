@@ -23,7 +23,6 @@
 
 <body>
     <div id="app">
-
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a style="width:120px;" class="navbar-item" href="{{route('admin.dash')}}">

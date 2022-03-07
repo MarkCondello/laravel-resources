@@ -6,6 +6,9 @@ use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\TagController;
 use App\Http\Controllers\PayOrderController;
 
+//api endpoints
+use App\Http\Controllers\Admin\Api\PostController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,6 +69,8 @@ Route::group([
     function(){
         Route::get('/dash', [App\Http\Controllers\Admin\DashController::class, 'index'])->name('dash');
 
+        Route::view('/vue-table', 'admin.vuetable')->name('vuetable');
+
         Route::group([
             'prefix' => '/post',
             'as' => 'post.',
@@ -113,7 +118,10 @@ Route::group([
                 'prefix' => '/post',
                 'as' => 'post.',
             ], function(){
-                Route::get('/list', [App\Http\Controllers\Admin\Api\PostController::class, 'list'])->name('list');
+                Route::get('/list', [PostController::class, 'list'])->name('list');
+
+                Route::get('/table-list', [PostController::class, 'tableList'])->name('table-list');
+
             });
 
             Route::group([
