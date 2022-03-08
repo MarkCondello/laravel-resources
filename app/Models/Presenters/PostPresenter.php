@@ -22,7 +22,7 @@ trait PostPresenter
           (object) [
             'label' => 'Author',
             'key' => 'author',
-            'sortable' => true,
+            'sortable' => false,
             'type' => 'String'
           ],
           (object) [
@@ -32,8 +32,8 @@ trait PostPresenter
             'type' => 'String'
           ],
           (object) [
-            'label' => 'Created At',
-            'key' => 'created',
+            'label' => 'Created',
+            'key' => 'created_at',
             'sortable' => true,
             'type' => 'Date'
           ],

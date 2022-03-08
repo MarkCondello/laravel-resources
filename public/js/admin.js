@@ -2946,6 +2946,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     table_ths: {
@@ -2964,7 +2969,8 @@ __webpack_require__.r(__webpack_exports__);
       page: 1,
       sort: null,
       dir: null,
-      pagination: null
+      pagination: null,
+      search: null
     };
   },
   created: function created() {
@@ -2982,12 +2988,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(this.dataUrl, {
         params: params
       }).then(function (res) {
-        console.log('res', res); // this.table_ths = res.data.table_ths
-
-        _this.table_rows = res.data.data; // this.search = res.config.params
-        //     ? res.config.params.search
-        //     : this.search;
-
+        _this.table_rows = res.data.data;
         _this.pagination = res.data.meta;
       })["catch"](console.error)["finally"](function () {
         _this.loading = false;
@@ -3000,9 +3001,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     setPage: function setPage(page) {
       this.page = page;
-      this.getData({
-        page: this.page
-      });
+      var params = {
+        page: page
+      };
+
+      if (this.dir && this.sort) {
+        params.dir = this.dir;
+        params.sort = this.sort;
+      }
+
+      this.getData(params);
     },
     sortColumn: function sortColumn(name) {
       if (this.sort === name) {
@@ -3018,8 +3026,12 @@ __webpack_require__.r(__webpack_exports__);
       this.sort = name;
       this.getData({
         sort: this.sort,
-        dir: this.dir
+        dir: this.dir,
+        page: this.page
       });
+    },
+    handleSearch: function handleSearch() {
+      console.log('search change', this.search);
     }
   }
 });
@@ -40711,6 +40723,34 @@ var render = function() {
     "div",
     { staticClass: "vue-table" },
     [
+      _c("header", [
+        _c("label", [_vm._v("Search table")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.search,
+              expression: "search"
+            }
+          ],
+          attrs: { type: "search" },
+          domProps: { value: _vm.search },
+          on: {
+            input: [
+              function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.search = $event.target.value
+              },
+              _vm.handleSearch
+            ]
+          }
+        })
+      ]),
+      _vm._v(" "),
       _c("transition", { attrs: { name: "fade" } }, [
         _vm.loading
           ? _c("div", { staticClass: "loading" }, [

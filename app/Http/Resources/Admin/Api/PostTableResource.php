@@ -34,7 +34,7 @@ class PostTableResource extends JsonResource
           'value' => $this->tags()->first()->name,
         ],
         (object) [
-          'key' => 'created',
+          'key' => 'created_at',
           'value' =>  $this->created_at->format('d/m/Y'),
         ],
         (object) [

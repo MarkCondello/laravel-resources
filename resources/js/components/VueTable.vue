@@ -1,5 +1,10 @@
 <template>
   <div class="vue-table">
+    <!-- Will need a portal to position search anywhere we want -->
+    <header>
+      <label>Search table</label>
+      <input type="search" v-model="search" @input="handleSearch">
+    </header>
     <transition name="fade">
       <div v-if="loading" class="loading">
           <div class="spinner">
@@ -103,6 +108,7 @@ export default {
       sort: null,
       dir: null,
       pagination: null,
+      search: null,
     }
   },
   created() {
@@ -115,44 +121,43 @@ export default {
       axios
         .get(this.dataUrl, {params})
         .then(res => {
-          console.log('res', res)
-          // this.table_ths = res.data.table_ths
           this.table_rows = res.data.data
-            // this.search = res.config.params
-            //     ? res.config.params.search
-            //     : this.search;
-
           this.pagination = res.data.meta;
         })
         .catch(console.error)
         .finally(() => {
-            this.loading = false;
-        });
+            this.loading = false
+        })
     },
     getTdType(key) {
       return this.table_ths.find(th => th.key === key).type
     },
     setPage(page) {
-        this.page = page;
-        this.getData({page: this.page});
+        this.page = page
+        const params = { page }
+        if(this.dir && this.sort) {
+          params.dir = this.dir
+          params.sort = this.sort
+        }
+        this.getData(params)
     },
     sortColumn(name) {
         if (this.sort === name) {
             if (this.dir === "asc") {
-                this.dir = "desc";
+                this.dir = "desc"
             } else if (this.dir === "desc") {
-                this.dir = "asc";
+                this.dir = "asc"
             }
         } else {
-            this.dir = "asc";
+            this.dir = "asc"
         }
         this.sort = name;
-        this.getData({sort: this.sort, dir: this.dir});
+        this.getData({sort: this.sort, dir: this.dir, page: this.page});
     },
+    handleSearch() {
+      console.log('search change', this.search)
+    }
   }
-  
-
-
 }
 </script>
 

@@ -19,15 +19,19 @@ class PostController extends Controller
         );
     }
 
-    public function tableList()
+    public function tableList(Request $request)
     {
-        // $postHead = new PostTableHeadResource();
-        return PostTableResource::collection(Post::paginate(5));
-        // return response()->json(
-        //     [
-        //         'table_ths' => $postHead->head(),
-        //         'table_rows' => PostTableResource::collection(Post::paginate(5))
-        //     ]
-        // );
+         return PostTableResource::collection(
+            Post::where(function($query){
+                // $query->where('search_field_key', 'like', '%' . request()->query('search') . '%');
+            })
+            ->when($request->input('sort'), function($query, $sort) use($request) {
+                $query->when($request->input('dir'), function($query, $dir) use ($sort) {
+                    $query->orderBy($sort, $dir);
+                });
+            })
+            ->paginate(5)
+        );
+     
     }
 }
