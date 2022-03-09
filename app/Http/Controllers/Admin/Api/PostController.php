@@ -22,15 +22,18 @@ class PostController extends Controller
     public function tableList(Request $request)
     {
          return PostTableResource::collection(
-            Post::where(function($query){
-                // $query->where('search_field_key', 'like', '%' . request()->query('search') . '%');
-            })
-            ->when($request->input('sort'), function($query, $sort) use($request) {
-                $query->when($request->input('dir'), function($query, $dir) use ($sort) {
-                    $query->orderBy($sort, $dir);
-                });
-            })
-            ->paginate(5)
+            Post::query()
+                ->when($request->input('search_by'), function($query, $search_by) use($request) {
+                    $query->when($request->input('search'), function($query, $search) use($search_by) {
+                        $query->where($search_by, 'LIKE',  "%$search%");
+                    });
+                })
+                ->when($request->input('sort'), function($query, $sort) use($request) {
+                    $query->when($request->input('dir'), function($query, $dir) use($sort) {
+                        $query->orderBy($sort, $dir);
+                    });
+                })
+                ->paginate(5)
         );
      
     }

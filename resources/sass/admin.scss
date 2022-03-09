@@ -6,6 +6,7 @@
 
 
 @import './admin/components/flash-message';
+@import './admin/components/tables';
 
 // ToDo: Split out to its own file
 .modal {
@@ -14,24 +15,21 @@
 
 .ellipsis-menu {
     position: relative;
-
+    text-align: center;
     .ellipsis-dropdown {
         position: absolute;
-        top: 20px;
-        left: 0;
+        top: 15px;
+        right: 0;
         z-index: 2;
         background-color: #fff;
         padding: .5rem;
         border-radius: 4px;
         box-shadow: 0px 0px 5px rgba(grey, .25);
-
-
         li {
             .button {
                 width: 100%;
                 margin-bottom: .5rem;
             }
-
             &:last-child {
                 .button {
                     margin-bottom: 0;

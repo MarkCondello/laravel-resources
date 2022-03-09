@@ -19015,18 +19015,154 @@ readers do not read off random characters that represent icons */
   opacity: 0;
 }
 
+table {
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+  width: 100%;
+}
+
+table th,
+table td {
+  font-size: 14px;
+  padding: 0.5rem;
+}
+
+table thead {
+  background-color: transparent;
+  border: none;
+}
+
+table thead th {
+  color: #ababab;
+  font-weight: 400;
+  text-align: left;
+}
+
+table thead th button {
+  border: 0;
+  background-color: transparent;
+  color: #4950b6;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+
+table tbody {
+  background-color: transparent;
+}
+
+table tbody tr {
+  background-color: #f7f7f7;
+  position: relative;
+}
+
+table tbody tr td {
+  font-weight: 400;
+  margin: 0;
+}
+
+.vue-table {
+  position: relative;
+}
+
+.vue-table .loading {
+  position: absolute;
+  top: 0;
+  right: 0px;
+}
+
+.vue-table header {
+  align-items: center;
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.vue-table header i {
+  color: #4950b6;
+}
+
+.vue-table header label {
+  margin-left: 1rem;
+}
+
+.vue-table header label span {
+  display: none;
+}
+
+.vue-table header input {
+  background-color: #4950b617;
+  border: none;
+  color: #000;
+  font-size: 1rem;
+  outline: none;
+  padding: 0.5rem 1rem;
+}
+
+.vue-table header input::-moz-placeholder {
+  color: #4950b6;
+}
+
+.vue-table header input:-ms-input-placeholder {
+  color: #4950b6;
+}
+
+.vue-table header input::placeholder {
+  color: #4950b6;
+}
+
+.vue-table nav.pagination {
+  margin-top: 1.5rem;
+}
+
+.vue-table nav.pagination ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.vue-table nav.pagination ul li {
+  margin-right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.vue-table nav.pagination ul li button {
+  border: 0;
+  background-color: transparent;
+  color: #4950b6;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  text-align: center;
+  width: 1rem;
+}
+
+.vue-table nav.pagination ul li.current {
+  background-color: #4950b617;
+}
+
+.vue-table nav.pagination ul li.current button {
+  color: grey;
+  cursor: none;
+  font-weight: 400;
+  pointer-events: none;
+}
+
 .modal {
   display: block;
 }
 
 .ellipsis-menu {
   position: relative;
+  text-align: center;
 }
 
 .ellipsis-menu .ellipsis-dropdown {
   position: absolute;
-  top: 20px;
-  left: 0;
+  top: 15px;
+  right: 0;
   z-index: 2;
   background-color: #fff;
   padding: 0.5rem;

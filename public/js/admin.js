@@ -2951,6 +2951,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     table_ths: {
@@ -2960,17 +2964,22 @@ __webpack_require__.r(__webpack_exports__);
     dataUrl: {
       type: String,
       required: true
+    },
+    searchBy: {
+      type: String,
+      "default": null
     }
   },
   data: function data() {
     return {
       loading: false,
-      table_rows: null,
+      table_rows: [],
       page: 1,
       sort: null,
       dir: null,
       pagination: null,
-      search: null
+      search: null,
+      no_results: false
     };
   },
   created: function created() {
@@ -2981,16 +2990,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      this.loading = true;
-      console.log('getData', {
-        params: params
-      });
+      this.loading = true; // console.log('getData', {params})
+
       axios.get(this.dataUrl, {
         params: params
       }).then(function (res) {
-        _this.table_rows = res.data.data;
+        _this.table_rows = res.data.data; // attach a reference to the column for the td el
+        // add in other attributes as well eg classes, styles, data-attrs
+        // check Lees widget and the article class for details
+
         _this.pagination = res.data.meta;
       })["catch"](console.error)["finally"](function () {
+        _this.no_results = _this.table_rows.length < 1;
         _this.loading = false;
       });
     },
@@ -3031,7 +3042,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     handleSearch: function handleSearch() {
-      console.log('search change', this.search);
+      var _this2 = this;
+
+      var searchTimeout = setTimeout(function () {
+        _this2.getData({
+          search: _this2.search,
+          search_by: _this2.searchBy
+        });
+
+        clearTimeout(searchTimeout);
+      }, 500);
     }
   }
 });
@@ -40723,39 +40743,58 @@ var render = function() {
     "div",
     { staticClass: "vue-table" },
     [
-      _c("header", [
-        _c("label", [_vm._v("Search table")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.search,
-              expression: "search"
-            }
-          ],
-          attrs: { type: "search" },
-          domProps: { value: _vm.search },
-          on: {
-            input: [
-              function($event) {
-                if ($event.target.composing) {
-                  return
+      _vm.searchBy
+        ? _c("header", [
+            _c("i", { staticClass: "fas fa-search" }),
+            _vm._v(" "),
+            _c("label", [
+              _c("span", [_vm._v("Search table")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                attrs: {
+                  type: "search",
+                  placeholder: "Search by " + _vm.searchBy + "."
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.search = $event.target.value
+                    },
+                    _vm.handleSearch
+                  ]
                 }
-                _vm.search = $event.target.value
-              },
-              _vm.handleSearch
-            ]
-          }
-        })
+              })
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("transition", { attrs: { name: "fade" } }, [
+        _vm.no_results
+          ? _c("div", { staticClass: "no-items" }, [
+              _c("i", { staticClass: "fa fa-empty-set fa-2x" }),
+              _vm._v(" "),
+              _c("p", [_vm._v("There are no items available.")])
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("transition", { attrs: { name: "fade" } }, [
         _vm.loading
           ? _c("div", { staticClass: "loading" }, [
               _c("div", { staticClass: "spinner" }, [
-                _c("i", { staticClass: "fas fa-spinner fa-spin fa-4x" })
+                _c("i", { staticClass: "fas fa-spinner fa-spin" })
               ])
             ])
           : _vm._e()
@@ -40788,29 +40827,19 @@ var render = function() {
                               _c("span", [_vm._v(_vm._s(th.label))]),
                               _vm._v(" "),
                               th.key === _vm.sort
-                                ? _c(
-                                    "span",
-                                    {
-                                      class:
-                                        "fal fa-long-arrow-" +
-                                        (_vm.dir === "desc" ? "up" : "down")
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(
-                                            _vm.dir === "desc" ? "up" : "down"
-                                          ) +
-                                          "\n              "
-                                      )
-                                    ]
-                                  )
+                                ? _c("span", {
+                                    class:
+                                      "fa fa-arrow-" +
+                                      (_vm.dir === "desc" ? "up" : "down")
+                                  })
                                 : _vm._e()
                             ]
                           )
                         : [
                             _vm._v(
-                              "\n          " + _vm._s(th.label) + "\n          "
+                              "\n            " +
+                                _vm._s(th.label) +
+                                "\n            "
                             )
                           ]
                     ],
@@ -40847,9 +40876,9 @@ var render = function() {
                               { attrs: { "data-type": _vm.getTdType(td.key) } },
                               [
                                 _vm._v(
-                                  "\n           " +
+                                  "\n            " +
                                     _vm._s(td.value) +
-                                    "\n          "
+                                    "\n            "
                                 )
                               ]
                             )
@@ -40863,71 +40892,79 @@ var render = function() {
               0
             )
           ])
-        : _c("div", { staticClass: "no-items" }, [
-            _c("i", { staticClass: "fal fa-empty-set fa-2x" }),
-            _vm._v(" "),
-            _c("p", [_vm._v("There are no items available.")])
-          ]),
+        : _vm._e(),
       _vm._v(" "),
       _vm.table_ths &&
       _vm.table_ths.length &&
       _vm.pagination &&
       _vm.pagination.last_page > 1
-        ? _c("nav", { attrs: { "aria-label": "pagination" } }, [
-            _c(
-              "ul",
-              { staticClass: "pagination" },
-              [
-                _vm.pagination.current_page !== 1
-                  ? _c(
+        ? _c(
+            "nav",
+            {
+              staticClass: "pagination",
+              attrs: { "aria-label": "pagination" }
+            },
+            [
+              _c(
+                "ul",
+                [
+                  _vm.pagination.current_page !== 1
+                    ? _c(
+                        "li",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.setPage(
+                                _vm.pagination.current_page - 1
+                              )
+                            }
+                          }
+                        },
+                        [_vm._m(0)]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.pagination.last_page, function(page) {
+                    return _c(
                       "li",
                       {
+                        class: {
+                          current: _vm.pagination.current_page === page
+                        },
                         on: {
                           click: function($event) {
-                            return _vm.setPage(_vm.pagination.current_page - 1)
+                            return _vm.setPage(page)
                           }
                         }
                       },
-                      [_vm._m(0)]
+                      [
+                        _c("button", { attrs: { type: "button" } }, [
+                          _vm._v(_vm._s(page))
+                        ])
+                      ]
                     )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.pagination.last_page, function(page) {
-                  return _c(
-                    "li",
-                    {
-                      class: { current: _vm.pagination.current_page === page },
-                      on: {
-                        click: function($event) {
-                          return _vm.setPage(page)
-                        }
-                      }
-                    },
-                    [
-                      _c("button", { attrs: { type: "button" } }, [
-                        _vm._v(_vm._s(page))
-                      ])
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _vm.pagination.current_page !== _vm.pagination.last_page
-                  ? _c(
-                      "li",
-                      {
-                        on: {
-                          click: function($event) {
-                            return _vm.setPage(_vm.pagination.current_page + 1)
+                  }),
+                  _vm._v(" "),
+                  _vm.pagination.current_page !== _vm.pagination.last_page
+                    ? _c(
+                        "li",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.setPage(
+                                _vm.pagination.current_page + 1
+                              )
+                            }
                           }
-                        }
-                      },
-                      [_vm._m(1)]
-                    )
-                  : _vm._e()
-              ],
-              2
-            )
-          ])
+                        },
+                        [_vm._m(1)]
+                      )
+                    : _vm._e()
+                ],
+                2
+              )
+            ]
+          )
         : _vm._e()
     ],
     1
@@ -40939,7 +40976,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("button", { attrs: { type: "button" } }, [
-      _c("i", { staticClass: "fal fa-arrow-left" })
+      _c("i", { staticClass: "fa fa-arrow-left" })
     ])
   },
   function() {
@@ -40947,7 +40984,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("button", { attrs: { type: "button" } }, [
-      _c("i", { staticClass: "fal fa-arrow-right" })
+      _c("i", { staticClass: "fa fa-arrow-right" })
     ])
   }
 ]

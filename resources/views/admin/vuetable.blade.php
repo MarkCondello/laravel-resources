@@ -7,6 +7,7 @@
       <vue-table 
         :table_ths="{{ json_encode($thrs) }}"
         data-url="{{ route('admin.api.post.table-list') }}"
+        search-by="title"
       ></vue-table>
   </section>
 @endsection

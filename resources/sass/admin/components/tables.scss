@@ -1,0 +1,103 @@
+@mixin btn {
+  border: 0;
+  background-color: transparent;
+  color: #4950b6;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+table {
+  border-collapse: separate;
+    border-spacing: 0 .5rem;
+    width: 100%;
+    th,
+    td {
+        font-size: 14px;
+        padding: .5rem;
+    }
+    thead {
+        background-color: transparent;
+        border: none;
+        th {
+          color: #ababab;
+          font-weight: 400;
+          text-align: left;
+          button {
+            @include btn;
+          }
+        }
+    }
+    tbody {
+        background-color: transparent;
+        tr {
+            background-color: #f7f7f7;
+            position: relative;
+            td {
+                font-weight: 400;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.vue-table {
+  position: relative;
+  .loading {
+    position: absolute;
+    top: 0;
+    right: 0px;
+  }
+  header {
+    align-items: center;
+    display: flex;
+    margin-bottom: 1rem;
+    i {
+      color: #4950b6;
+    }
+    label {
+      margin-left: 1rem;
+      span {
+        display: none;
+      }
+    }
+    input {
+      background-color: #4950b617;
+      border: none;
+      color: #000;
+      font-size: 1rem;
+      outline: none;
+      padding: .5rem 1rem;
+      &::placeholder {
+        color: #4950b6;
+      }
+    }
+  }
+  nav.pagination {
+    margin-top: 1.5rem;
+    ul {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      li {
+        margin-right: .5rem;
+        padding: 0.25rem 0.5rem;
+        button {
+          @include btn;
+          font-size: 14px;
+          text-align: center;
+          width: 1rem;
+        }
+        &.current {
+          background-color: #4950b617;
+          button {
+            color: grey;
+            cursor: none;
+            font-weight: 400;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+  }
+}
